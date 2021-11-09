@@ -25,6 +25,9 @@ If you are using a local dataset, add it in `public/data/` and refer to it in `c
 ## Reading list babe
 
 https://observablehq.com/@d3/treemap
+
 https://observablehq.com/@analyzer2004/plot-gallery
+
 https://observablehq.com/@analyzer2004/gridcartogram
+
 https://observablehq.com/@mbostock/u-s-population-by-state-1790-1990
