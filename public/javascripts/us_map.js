@@ -591,26 +591,25 @@ class GridMap {
 
 // get the data
 var data = []
-d3.csv("/data/state_fips@2.csv").then(function(data){data = data.map(d => ({
+d3.csv("/data/state_fips@2.csv").then(function(d){data = d.map(d => ({
     state: d.stusps,
     code: d.stname,
     value: 0,
     city:{},
     shooting:{}}))});
 
-d3.csv("/data/shootings.csv").then(function(data) {
+d3.csv("/data/shootings.csv").then(function(dsh) {
     // format the data
-    data.sort((a,b) => (a.state > b.state) ? 1 : ((b.state > a.state) ? -1 : 0)).forEach(function (d) {
-
+    dsh.sort((a,b) => (a.state > b.state) ? 1 : ((b.state > a.state) ? -1 : 0)).forEach(function (d) {
+        var i = data.findIndex(x => x.state === d.state);
+        data[i].value = data[i].value+1;
+        if (!data[i].city[d.city]) {
+            data[i].city[d.city] = 0;
+        }
+        data[i].city[d.city] = data[i].city[d.city]+1;
+        data[i].shooting[d.date] = d.race;
     });
 
-/*    // Scale the range of the data in the domains
-    x.domain(data.map(function (d) {
-        return d.salesperson;
-    }));
-    y.domain([0, d3.max(data, function (d) {
-        return d.sales;
-    })]);*/
 });
 
 map = [[0, 0, ""], [1, 0, ""], [2, 0, ""], [3, 0, ""], [4, 0, ""], [5, 0, ""], [6, 0, ""], [7, 0, ""], [8, 0, ""],
