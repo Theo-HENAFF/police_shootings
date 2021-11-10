@@ -590,8 +590,8 @@ class GridMap {
 // get the data
 var data = []
 d3.csv("/data/state_fips@2.csv").then(function(d){data = d.map(d => ({
-    state: d.stusps,
-    code: d.stname,
+    code: d.stusps,
+    state: d.stname,
     value: 0,
     city:{},
     shooting:{}}))});
@@ -599,7 +599,7 @@ d3.csv("/data/state_fips@2.csv").then(function(d){data = d.map(d => ({
 d3.csv("/data/shootings.csv").then(function(dsh) {
     // format the data
     dsh.sort((a,b) => (a.state > b.state) ? 1 : ((b.state > a.state) ? -1 : 0)).forEach(function (d) {
-        var i = data.findIndex(x => x.state === d.state);
+        var i = data.findIndex(x => x.code === d.state);
         data[i].value = data[i].value+1;
         if (!data[i].city[d.city]) {
             data[i].city[d.city] = 0;
@@ -636,10 +636,16 @@ const svg = d3.select("#map").append("svg")
     .append("g")
     .attr("transform", "translate(" + margin_map.left + "," + margin_map.top + ")");
 
-
 const gmap = new GridMap(svg)
     .size([width_map, height_map])
+    .style({sizeByValue: false, legendTitle: "TEST"})
+    .field({
+        name: "state",
+        code: "code",
+        values: "value"
+    })
     .mapGrid(map)
+    .data(data)
     .render();
 
 svg.node();
