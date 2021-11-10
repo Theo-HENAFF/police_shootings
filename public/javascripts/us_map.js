@@ -1,10 +1,10 @@
 class GridMap {
-    constructor(container) {
+    constructor(container, width, height) {
         this._container = container;
         this._g = null;
 
-        this._width = 800;
-        this._height = 600;
+        this._width = width;
+        this._height = height;
         this._style = {
             transition: false,
             shape: "square",
@@ -636,7 +636,7 @@ const svg = d3.select("#map").append("svg")
     .append("g")
     .attr("transform", "translate(" + margin_map.left + "," + margin_map.top + ")");
 
-const gmap = new GridMap(svg)
+const gmap = new GridMap(svg, width_map, height_map)
     .size([width_map, height_map])
     .style({sizeByValue: false, legendTitle: "TEST"})
     .field({
