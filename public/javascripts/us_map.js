@@ -1,5 +1,3 @@
-// https://github.com/analyzer2004/gridmap
-// Copyright 2020 Eric Lo
 class GridMap {
     constructor(container) {
         this._container = container;
@@ -628,19 +626,19 @@ map = [[0, 0, ""], [1, 0, ""], [2, 0, ""], [3, 0, ""], [4, 0, ""], [5, 0, ""], [
 
 
 // set the dimensions and margins of the graph
-var margin = {top: 20, right: 20, bottom: 30, left: 40},
-    width = 960 - margin.left - margin.right,
-    height = 600 - margin.top - margin.bottom;
+var margin_map = {top: 20, right: 20, bottom: 30, left: 40},
+    width_map = 800 - margin_map.left - margin_map.right,
+    height_map = 450 - margin_map.top - margin_map.bottom;
 
-const svg = d3.select("#viz").append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
+const svg = d3.select("#map").append("svg")
+    .attr("width", width_map + margin_map.left + margin_map.right)
+    .attr("height", height_map + margin_map.top + margin_map.bottom)
     .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    .attr("transform", "translate(" + margin_map.left + "," + margin_map.top + ")");
 
 
 const gmap = new GridMap(svg)
-    .size([960, 500])
+    .size([width_map, height_map])
     .mapGrid(map)
     .render();
 
