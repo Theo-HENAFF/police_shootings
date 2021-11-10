@@ -591,8 +591,12 @@ class GridMap {
 
 // get the data
 var data = []
-var states = []
-d3.csv("/data/state_fips@2.csv").then(function(data){states = data.map(d => [d.stusps, d.stname])});
+d3.csv("/data/state_fips@2.csv").then(function(data){data = data.map(d => ({
+    state: d.stusps,
+    code: d.stname,
+    value: 0,
+    city:{},
+    shooting:{}}))});
 
 d3.csv("/data/shootings.csv").then(function(data) {
     // format the data
