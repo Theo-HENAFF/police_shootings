@@ -629,6 +629,7 @@ d3.csv("/data/shootings.csv").then(function(dsh) {
         height_map = 450 - margin_map.top - margin_map.bottom;
 
     const svg = d3.select("#map").append("svg")
+        .attr("font-size", "09pt")
         .attr("width", width_map + margin_map.left + margin_map.right)
         .attr("height", height_map + margin_map.top + margin_map.bottom)
         .append("g")
@@ -636,7 +637,8 @@ d3.csv("/data/shootings.csv").then(function(dsh) {
 
     const gmap = new GridMap(svg, width_map, height_map)
         .size([width_map, height_map])
-        .style({sizeByValue: false, legendTitle: "Nombre de personnes tués par la police"})
+        .cellPalette(d3.interpolateReds)
+        .style({sizeByValue: false, legendTitle: "Nombre de personnes tués par la police", defaultTextColor:"black"})
         .field({ code: "code", name: "state", total: "value" })
         .mapGrid(map)
         .data(data)
