@@ -1,0 +1,57 @@
+{
+    "children": [
+        {
+            "code": "AL",
+            "name": "Alabama",
+            "sum_value": 95,
+            "children": [
+                {"name": "Dadeville", "value": 1},
+                {"name": "Homewood", "value": 4},
+                {"name": "Birmingham", "value": 7},
+                {"name": "Atmore", "value": 1}
+            ],
+            "shooting": [
+                {"date": "2015-02-11", "race": "White"},
+                {"date": "2015-02-20", "race": "Black"},
+                {"date": "2015-02-23", "race": "Black"},
+                {"date": "2015-03-11", "race": "White"},
+                {"date": "2020-05-20", "race": "Black"}
+            ]
+        },
+        {
+            "code": "AL",
+            "name": "MO",
+            "sum_value": 95,
+            "children": [
+                {"name": "Dadeville", "value": 1},
+                {"name": "Homewood", "value": 4},
+                {"name": "Birmingham", "value": 7},
+                {"name": "Atmore", "value": 1}
+            ],
+            "shooting": [
+                {"date": "2015-02-11", "race": "White"},
+                {"date": "2015-02-20", "race": "Black"},
+                {"date": "2015-02-23", "race": "Black"},
+                {"date": "2015-03-11", "race": "White"},
+                {"date": "2020-05-20", "race": "Black"}
+            ]
+        },
+        {
+            "code": "AL",
+            "name": "California",
+            "sum_value": 95,
+            "children": [
+                {"name": "Dadeville", "value": 1},
+                {"name": "Homewood", "value": 4},
+                {"name": "Birmingham", "value": 7},
+                {"name": "Atmore", "value": 1}
+            ],
+            "shooting": [
+                {"date": "2015-02-11", "race": "White"},
+                {"date": "2015-02-20", "race": "Black"},
+                {"date": "2015-02-23", "race": "Black"},
+                {"date": "2015-03-11", "race": "White"},
+                {"date": "2020-05-20", "race": "Black"}
+            ]
+        }
+    ]}
