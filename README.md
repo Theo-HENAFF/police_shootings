@@ -22,7 +22,17 @@ D3JS content must be added in `#viz` div (located in `views/index.js`)
 
 If you are using a local dataset, add it in `public/data/` and refer to it in `code.js` as `/data/MYDATA.CSV`
 
-## Reading list babe
+## To do list
+1. Mise en place du data object pour la Treemap
+2. Toggle switch NB Hab/densité de population
+3. Stacked Area Chart
+4. Tableau (Description, état, population, ...)
+5. Adaptabilité du tableau au survol
+6. Homogénéisation des couleurs
+7. Homogénéisation des tailles graphiques (Responsive ?)
+8. **BONUS :**  Micro graphique au survol.
+
+## Source list
 
 https://observablehq.com/@d3/treemap
 
