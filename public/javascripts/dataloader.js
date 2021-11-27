@@ -2,7 +2,7 @@
 var data = {children: []}
 d3.csv("/data/state_fips@2.csv").then(function(d){data.children = d.map(d => ({
     code: d.stusps,
-    state: d.stname,
+    name: d.stname,
     sum_value: 0,
     children:[],
     shooting:[]}))});
@@ -50,15 +50,13 @@ d3.csv("/data/shootings.csv").then(function (dsh) {
         .size([width_map, height_map])
         .cellPalette(d3.interpolateReds)
         .style({sizeByValue: false, legendTitle: "Nombre de personnes tués par la police", defaultTextColor:"black"})
-        .field({ code: "code", name: "state", total: "sum_value" })
+        .field({ code: "code", name: "name", total: "sum_value" })
         .mapGrid(map)
         .data(data.children)
         .render();
 
     svg.node();
 
-});
-
-d3.json("/data/testdata.json").then(function (dataTree) {
-    TreemapObject(dataTree);
+}).then(function () {
+    TreemapObject(data);
 });
