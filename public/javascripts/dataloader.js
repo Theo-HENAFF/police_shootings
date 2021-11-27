@@ -4,8 +4,17 @@ d3.csv("/data/state_fips@2.csv").then(function(d){data.children = d.map(d => ({
     code: d.stusps,
     name: d.stname,
     sum_value: 0,
-    children:[],
+    children:[{name: "Other", value: 0}],
     shooting:[]}))});
+
+d3.csv("/data/us-cities-top-1k.csv").then(function(d){
+    d.sort((a, b) => (a.state > b.state) ? 1 : ((b.state > a.state) ? -1 : 0)).forEach(function (d) {
+        var i = data.children.findIndex(x => x.name === d.state);
+        if (data.children[i].children.findIndex(x => x.name === d.city) === -1) {
+            data.children[i].children.push({name: d.city, value: 0});
+        }
+    });
+})
 
 d3.csv("/data/shootings.csv").then(function (dsh) {
     // format the data
@@ -13,9 +22,11 @@ d3.csv("/data/shootings.csv").then(function (dsh) {
         var i = data.children.findIndex(x => x.code === d.state);
         data.children[i].sum_value = data.children[i].sum_value+1;
         if (data.children[i].children.findIndex(x => x.name === d.city) === -1) {
-            data.children[i].children.push({name: d.city, value: 0});
+            data.children[i].children[data.children[i].children.findIndex(x => x.name === "Other")].value++;
         }
-        data.children[i].children[data.children[i].children.findIndex(x => x.name === d.city)].value++;
+        else{
+            data.children[i].children[data.children[i].children.findIndex(x => x.name === d.city)].value++;
+        }
         data.children[i].shooting.push({date: d.date, race: d.race});
     });
 
