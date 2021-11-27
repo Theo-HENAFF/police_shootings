@@ -1,25 +1,28 @@
 // get the data
 var data = []
-d3.csv("/data/state_fips@2.csv").then(function(d){data = d.map(d => ({
-    code: d.stusps,
-    state: d.stname,
-    value: 0,
-    city:{},
-    shooting:{}}))});
+d3.csv("/data/state_fips@2.csv").then(function (d) {
+    data = d.map(d => ({
+        code: d.stusps,
+        state: d.stname,
+        value: 0,
+        city: {},
+        shooting: {}
+    }))
+});
 
-d3.csv("/data/shootings.csv").then(function(dsh) {
+d3.csv("/data/shootings.csv").then(function (dsh) {
     // format the data
-    dsh.sort((a,b) => (a.state > b.state) ? 1 : ((b.state > a.state) ? -1 : 0)).forEach(function (d) {
+    dsh.sort((a, b) => (a.state > b.state) ? 1 : ((b.state > a.state) ? -1 : 0)).forEach(function (d) {
         var i = data.findIndex(x => x.code === d.state);
-        data[i].value = data[i].value+1;
+        data[i].value = data[i].value + 1;
         if (!data[i].city[d.city]) {
             data[i].city[d.city] = 0;
         }
-        data[i].city[d.city] = data[i].city[d.city]+1;
+        data[i].city[d.city] = data[i].city[d.city] + 1;
         data[i].shooting[d.date] = d.race;
     });
 
-}).then(function(){
+}).then(function () {
     var map = [[0, 0, ""], [1, 0, ""], [2, 0, ""], [3, 0, ""], [4, 0, ""], [5, 0, ""], [6, 0, ""], [7, 0, ""], [8, 0, ""],
         [9, 0, ""], [10, 0, ""], [11, 0, "ME"], [0, 1, "AK"], [1, 1, ""], [2, 1, ""], [3, 1, ""], [4, 1, ""], [5, 1, ""],
         [6, 1, "WI"], [7, 1, ""], [8, 1, ""], [9, 1, ""], [10, 1, "VT"], [11, 1, "NH"], [0, 2, ""], [1, 2, "WA"],
@@ -32,7 +35,7 @@ d3.csv("/data/shootings.csv").then(function(dsh) {
         [2, 6, ""], [3, 6, ""], [4, 6, "OK"], [5, 6, "LA"], [6, 6, "MS"], [7, 6, "AL"], [8, 6, "GA"], [9, 6, ""],
         [10, 6, ""], [11, 6, ""], [0, 7, ""], [1, 7, ""], [2, 7, ""], [3, 7, ""], [4, 7, "TX"], [5, 7, ""],
         [6, 7, ""], [7, 7, ""], [8, 7, ""], [9, 7, "FL"], [10, 7, ""], [11, 7, ""]]
-        .map(d => ({ col: d[0], row: d[1], code: d[2] }));
+        .map(d => ({col: d[0], row: d[1], code: d[2]}));
 
     // set the dimensions and margins of the graph
     var margin_map = {top: 20, right: 20, bottom: 30, left: 40},
@@ -49,8 +52,8 @@ d3.csv("/data/shootings.csv").then(function(dsh) {
     const gmap = new GridMap(svg, width_map, height_map)
         .size([width_map, height_map])
         .cellPalette(d3.interpolateReds)
-        .style({sizeByValue: false, legendTitle: "Nombre de personnes tués par la police", defaultTextColor:"black"})
-        .field({ code: "code", name: "state", total: "value" })
+        .style({sizeByValue: false, legendTitle: "Nombre de personnes tués par la police", defaultTextColor: "black"})
+        .field({code: "code", name: "state", total: "value"})
         .mapGrid(map)
         .data(data)
         .render();
@@ -59,6 +62,6 @@ d3.csv("/data/shootings.csv").then(function(dsh) {
 
 });
 
-d3.json("/data/testdata.json").then(function(dataTree) {
+d3.json("/data/testdata.json").then(function (dataTree) {
     TreemapObject(dataTree);
 });
