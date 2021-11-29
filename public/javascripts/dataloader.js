@@ -1,25 +1,33 @@
 // get the data
-var data = []
-d3.csv("/data/state_fips@2.csv").then(function (d) {
-    data = d.map(d => ({
-        code: d.stusps,
-        state: d.stname,
-        value: 0,
-        city: {},
-        shooting: {}
-    }))
-});
+var data = {children: []}
+d3.csv("/data/state_fips@2.csv").then(function(d){data.children = d.map(d => ({
+    code: d.stusps,
+    name: d.stname,
+    sum_value: 0,
+    children:[{name: "Other", value: 0}],
+    shooting:[]}))});
+
+d3.csv("/data/us-cities-top-1k.csv").then(function(d){
+    d.sort((a, b) => (a.state > b.state) ? 1 : ((b.state > a.state) ? -1 : 0)).forEach(function (d) {
+        var i = data.children.findIndex(x => x.name === d.state);
+        if (data.children[i].children.findIndex(x => x.name === d.city) === -1) {
+            data.children[i].children.push({name: d.city, value: 0});
+        }
+    });
+})
 
 d3.csv("/data/shootings.csv").then(function (dsh) {
     // format the data
     dsh.sort((a, b) => (a.state > b.state) ? 1 : ((b.state > a.state) ? -1 : 0)).forEach(function (d) {
-        var i = data.findIndex(x => x.code === d.state);
-        data[i].value = data[i].value + 1;
-        if (!data[i].city[d.city]) {
-            data[i].city[d.city] = 0;
+        var i = data.children.findIndex(x => x.code === d.state);
+        data.children[i].sum_value = data.children[i].sum_value+1;
+        if (data.children[i].children.findIndex(x => x.name === d.city) === -1) {
+            data.children[i].children[data.children[i].children.findIndex(x => x.name === "Other")].value++;
         }
-        data[i].city[d.city] = data[i].city[d.city] + 1;
-        data[i].shooting[d.date] = d.race;
+        else{
+            data.children[i].children[data.children[i].children.findIndex(x => x.name === d.city)].value++;
+        }
+        data.children[i].shooting.push({date: d.date, race: d.race});
     });
 
 }).then(function () {
@@ -52,16 +60,14 @@ d3.csv("/data/shootings.csv").then(function (dsh) {
     const gmap = new GridMap(svg, width_map, height_map)
         .size([width_map, height_map])
         .cellPalette(d3.interpolateReds)
-        .style({sizeByValue: false, legendTitle: "Nombre de personnes tués par la police", defaultTextColor: "black"})
-        .field({code: "code", name: "state", total: "value"})
+        .style({sizeByValue: false, legendTitle: "Nombre de personnes tués par la police", defaultTextColor:"black"})
+        .field({ code: "code", name: "name", total: "sum_value" })
         .mapGrid(map)
-        .data(data)
+        .data(data.children)
         .render();
 
     svg.node();
 
-});
-
-d3.json("/data/testdata.json").then(function (dataTree) {
-    TreemapObject(dataTree);
+}).then(function () {
+    TreemapObject(data);
 });
