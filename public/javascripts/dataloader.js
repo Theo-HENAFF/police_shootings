@@ -1,13 +1,16 @@
 // get the data
 var data = {children: []}
-d3.csv("/data/state_fips@2.csv").then(function(d){data.children = d.map(d => ({
-    code: d.stusps,
-    name: d.stname,
-    sum_value: 0,
-    children:[{name: "Other", value: 0}],
-    shooting:[]}))});
+d3.csv("/data/state_fips@2.csv").then(function (d) {
+    data.children = d.map(d => ({
+        code: d.stusps,
+        name: d.stname,
+        sum_value: 0,
+        children: [{name: "Other", value: 0}],
+        shooting: []
+    }))
+});
 
-d3.csv("/data/us-cities-top-1k.csv").then(function(d){
+d3.csv("/data/us-cities-top-1k.csv").then(function (d) {
     d.sort((a, b) => (a.state > b.state) ? 1 : ((b.state > a.state) ? -1 : 0)).forEach(function (d) {
         var i = data.children.findIndex(x => x.name === d.state);
         if (data.children[i].children.findIndex(x => x.name === d.city) === -1) {
@@ -20,11 +23,10 @@ d3.csv("/data/shootings.csv").then(function (dsh) {
     // format the data
     dsh.sort((a, b) => (a.state > b.state) ? 1 : ((b.state > a.state) ? -1 : 0)).forEach(function (d) {
         var i = data.children.findIndex(x => x.code === d.state);
-        data.children[i].sum_value = data.children[i].sum_value+1;
+        data.children[i].sum_value = data.children[i].sum_value + 1;
         if (data.children[i].children.findIndex(x => x.name === d.city) === -1) {
             data.children[i].children[data.children[i].children.findIndex(x => x.name === "Other")].value++;
-        }
-        else{
+        } else {
             data.children[i].children[data.children[i].children.findIndex(x => x.name === d.city)].value++;
         }
         data.children[i].shooting.push({date: d.date, race: d.race});
@@ -60,8 +62,8 @@ d3.csv("/data/shootings.csv").then(function (dsh) {
     const gmap = new GridMap(svg, width_map, height_map)
         .size([width_map, height_map])
         .cellPalette(d3.interpolateReds)
-        .style({sizeByValue: false, legendTitle: "Nombre de personnes tués par la police", defaultTextColor:"black"})
-        .field({ code: "code", name: "name", total: "sum_value" })
+        .style({sizeByValue: false, legendTitle: "Nombre de personnes tués par la police", defaultTextColor: "black"})
+        .field({code: "code", name: "name", total: "sum_value"})
         .mapGrid(map)
         .data(data.children)
         .render();
@@ -69,5 +71,19 @@ d3.csv("/data/shootings.csv").then(function (dsh) {
     svg.node();
 
 }).then(function () {
-    TreemapObject(data);
+
+    const sortedData = {children: []}
+    data.children.forEach(function (state) {
+        // Get top 5 cities and remove Others also
+        state.children = state.children.sort(function (a, b) {
+            return b.value - a.value;
+        })
+            .slice(0, 5)
+            .filter(function (item) {
+                return item.name != "Other"
+            });
+        sortedData.children.push(state);
+    });
+
+    TreemapObject(sortedData);
 });
