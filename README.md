@@ -26,6 +26,7 @@ If you are using a local dataset, add it in `public/data/` and refer to it in `c
 - [X]  Mise en place du data object pour la Treemap
 - [ ]  Toggle switch NB Hab/densité de population
 - [ ]  Stacked Area Chart
+- [ ]  Clean la treemap
 - [ ]  Tableau (Description, état, population, ...)
 - [ ]  Adaptabilité du tableau au survol
 - [ ]  Homogénéisation des couleurs
@@ -35,6 +36,8 @@ If you are using a local dataset, add it in `public/data/` and refer to it in `c
 ## Source list
 
 https://observablehq.com/@d3/treemap
+
+https://www.d3-graph-gallery.com/graph/treemap_custom.html
 
 https://observablehq.com/@analyzer2004/plot-gallery
 
