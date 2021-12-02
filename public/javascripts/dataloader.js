@@ -78,7 +78,7 @@ d3.csv("/data/shootings.csv").then(function (dsh) {
         state.children = state.children.sort(function (a, b) {
             return b.value - a.value;
         })
-            .slice(0, 5)
+            .slice(0, 3)
             .filter(function (item) {
                 return item.name != "Other"
             });

@@ -1,8 +1,8 @@
 function TreemapObject(data) {
     // set the dimensions and margins of the graph
     const margin = {top: 10, right: 10, bottom: 10, left: 10},
-        width = 1445 - margin.left - margin.right,
-        height = 1445 - margin.top - margin.bottom;
+        width = 800 - margin.left - margin.right,
+        height = 450 - margin.top - margin.bottom;
 
     // append the svg object to the body of the page
     const svg = d3.select("#treemap")
@@ -14,8 +14,6 @@ function TreemapObject(data) {
             `translate(${margin.left}, ${margin.top})`);
 // Read data
 
-    // read json data
-    // d3.json("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/data_dendrogram_full.json").then(function(data) {
     // Give the data to this cluster layout:
     const root = d3.hierarchy(data).sum(function (d) {
         return d.value
@@ -24,19 +22,30 @@ function TreemapObject(data) {
     // Then d3.treemap computes the position of each element of the hierarchy
     d3.treemap()
         .size([width, height])
-        .padding(2)
+        .padding(2.5)
         (root)
 
+    let tooltip = d3
+        .select('#treemap')
+        .append('div')
+        .style('position', 'absolute')
+        .style('z-index', '10')
+        .style('visibility', 'hidden')
+        .style('background-color', 'white')
+        .style('border', 'solid')
+        .style('border-width', '2px')
+        .style('border-radius', '5px')
+        .style('padding', '5px');
 
     // prepare a color scale
     var color = d3.scaleOrdinal()
-        .domain(["boss1", "boss2", "boss3"])
-        .range(["#402D54", "#D18975", "#8FD175"])
+        .domain(["boss1", "boss2", "boss3", "boss3", "boss3"])
+        .range(["#942E5D", "#E0D572", "#E05C9A", "#46CBE0", "#358794"])
 
     // And a opacity scale
     var opacity = d3.scaleLinear()
         .domain([10, 30])
-        .range([.5, 1])
+        .range([.6, 1])
 
     // use this information to add rectangles:
     svg
@@ -63,71 +72,83 @@ function TreemapObject(data) {
         .style("opacity", function (d) {
             return opacity(d.data.value)
         })
+        .on('mouseover', function () {
+            tooltip.style('visibility', 'visible');
+        })
+        .on("mousemove", function (event, d) {
+            // console.log(d.parent.data.name)
+            tooltip
+                .style('top', event.pageY - 10 + 'px')
+                .style('left', event.pageX + 10 + 'px')
+                .text(`State : ${d.parent.data.name} | City : ${d.data.name} | Killing : ${d.data.value}`)
+        })
+        .on('mouseout', function () {
+            tooltip.style('visibility', 'hidden');
+        });
+    // and to add the text labels
+    // svg
+    //     .selectAll("text")
+    //     .data(root.leaves())
+    //     .enter()
+    //     .append("text")
+    //     .attr("x", function (d) {
+    //         return d.x0 + 5
+    //     })    // +10 to adjust position (more right)
+    //     .attr("y", function (d) {
+    //         return d.y0 + 20
+    //     })    // +20 to adjust position (lower)
+    //     .text(function (d) {
+    //         return d.data.name.replace('mister_', '')
+    //     })
+    //     .attr("font-size", "19px")
+    //     .attr("fill", "white")
 
     // and to add the text labels
-    svg
-        .selectAll("text")
-        .data(root.leaves())
-        .enter()
-        .append("text")
-        .attr("x", function (d) {
-            return d.x0 + 5
-        })    // +10 to adjust position (more right)
-        .attr("y", function (d) {
-            return d.y0 + 20
-        })    // +20 to adjust position (lower)
-        .text(function (d) {
-            return d.data.name.replace('mister_', '')
-        })
-        .attr("font-size", "19px")
-        .attr("fill", "white")
-
-    // and to add the text labels
-    svg
-        .selectAll("vals")
-        .data(root.leaves())
-        .enter()
-        .append("text")
-        .attr("x", function (d) {
-            return d.x0 + 5
-        })    // +10 to adjust position (more right)
-        .attr("y", function (d) {
-            return d.y0 + 35
-        })    // +20 to adjust position (lower)
-        .text(function (d) {
-            return d.data.value
-        })
-        .attr("font-size", "11px")
-        .attr("fill", "white")
+    // svg
+    //     .selectAll("vals")
+    //     .data(root.leaves())
+    //     .enter()
+    //     .append("text")
+    //     .attr("x", function (d) {
+    //         return d.x0 + 5
+    //     })    // +10 to adjust position (more right)
+    //     .attr("y", function (d) {
+    //         return d.y0 + 35
+    //     })    // +20 to adjust position (lower)
+    //     .text(function (d) {
+    //         return d.data.value
+    //     })
+    //     .attr("font-size", "11px")
+    //     .attr("fill", "white")
 
     // Add title for the 3 groups
-    svg
-        .selectAll("titles")
-        .data(root.descendants().filter(function (d) {
-            return d.depth == 1
-        }))
-        .enter()
-        .append("text")
-        .attr("x", function (d) {
-            return d.x0
-        })
-        .attr("y", function (d) {
-            return d.y0 + 21
-        })
-        .text(function (d) {
-            return d.data.name
-        })
-        .attr("font-size", "19px")
-        .attr("fill", function (d) {
-            return color(d.data.name)
-        })
+    // svg
+    //     .selectAll("titles")
+    //     .data(root.descendants().filter(function (d) {
+    //         return d.depth == 1
+    //     }))
+    //     .enter()
+    //     .append("text")
+    //     .attr("x", function (d) {
+    //         return d.x0
+    //     })
+    //     .attr("y", function (d) {
+    //         return d.y0 - 21
+    //     })
+    //     .text(function (d) {
+    //         return d.data.name
+    //     })
+    //     .attr("font-size", "19px")
+    //     .attr("fill", function (d) {
+    //         return color(d.data.name)
+    //     })
 
     // Add title for the 3 groups
-    svg
-        .append("text")
-        .attr("x", 0)
-        .attr("y", 14)    // +20 to adjust position (lower)
-        .text("Three group leaders and 14 employees")
-        .attr("font-size", "19px")
-        .attr("fill", "grey")
+    // svg
+    //     .append("text")
+    //     .attr("x", 0)
+    //     .attr("y", 0)    // +20 to adjust position (lower)
+    //     .text("Three group leaders and 14 employees")
+    //     .attr("font-size", "19px")
+    //     .attr("fill", "grey")
 };
