@@ -28,8 +28,8 @@ var g = svg.append("g")
 
 d3.tsv("/data/stacked_data.tsv")
     .then(function (data, error) {
-        console.log(error)
-        console.log(data)
+        // console.log(error)
+        // console.log(data)
         // if (error) throw error;
 
         var keys = data.columns.slice(1);

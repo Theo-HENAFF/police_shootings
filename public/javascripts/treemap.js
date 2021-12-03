@@ -76,7 +76,6 @@ function TreemapObject(data) {
             tooltip.style('visibility', 'visible');
         })
         .on("mousemove", function (event, d) {
-            // console.log(d.parent.data.name)
             tooltip
                 .style('top', event.pageY - 10 + 'px')
                 .style('left', event.pageX + 10 + 'px')

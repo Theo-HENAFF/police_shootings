@@ -61,12 +61,10 @@ table {
     width: 100%;
     border-collapse: collapse;
 }
-
 /* Zebra striping */
 tr:nth-of-type(odd) {
     background: #eee;
 }
-
 th {
     background: #333;
     color: white;
@@ -75,7 +73,6 @@ th {
     background-repeat: no-repeat;
     background-position: 3% center;
 }
-
 td, th {
     padding: 6px;
     border: 1px solid #ccc;

@@ -48,7 +48,7 @@ d3.csv("/data/shootings.csv").then(function (dsh) {
         .map(d => ({col: d[0], row: d[1], code: d[2]}));
 
     // set the dimensions and margins of the graph
-    var margin_map = {top: 20, right: 20, bottom: 30, left: 40},
+    var margin_map = {top: 10, right: 10, bottom: 10, left: 10},
         width_map = 800 - margin_map.left - margin_map.right,
         height_map = 450 - margin_map.top - margin_map.bottom;
 
@@ -78,7 +78,7 @@ d3.csv("/data/shootings.csv").then(function (dsh) {
         state.children = state.children.sort(function (a, b) {
             return b.value - a.value;
         })
-            .slice(0, 3)
+            .slice(0, 3+1)
             .filter(function (item) {
                 return item.name != "Other"
             });
@@ -86,4 +86,6 @@ d3.csv("/data/shootings.csv").then(function (dsh) {
     });
 
     TreemapObject(sortedData);
+}).then(function () {
+    TableObject(data);
 });
