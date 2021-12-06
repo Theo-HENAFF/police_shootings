@@ -1,87 +1,103 @@
-var svg = d3.select("#stacked_area"),
-    margin = {top: 20, right: 20, bottom: 30, left: 50},
-    width = svg.attr("width") - margin.left - margin.right,
-    height = svg.attr("height") - margin.top - margin.bottom;
+function swatches({
+                      colour,
+                      swatchRadius = 6,
+                      swatchPadding = swatchRadius * (2/3),
+                      labelFont = "12px sans-serif",
+                      labelFormat = x => x,
+                      labelPadding = swatchRadius * 1.5,
+                      marginLeft = 0
+                  } = {}) {
 
-var parseDate = d3.timeParse("%Y %b %d");
+    const spacing = colour
+        .domain()
+        .map(d => labelFormat(d))
+        .map(d => getLabelLength(d, labelFont) + (swatchRadius * 2) + swatchPadding + labelPadding)
+        .map((_, i, g) => d3.cumsum(g)[i] + marginLeft)
 
-var x = d3.scaleTime().range([0, width]),
-    y = d3.scaleLinear().range([height, 0]),
-    z = d3.scaleOrdinal(d3.schemeCategory10);
+    const width = d3.max(spacing)
+    const height = swatchRadius * 2 + swatchPadding * 2
 
-var stack = d3.stack();
+    const svg = d3.create("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .attr("viewBox", [0, 0, width, height])
+        .style("overflow", "visible")
+        .style("display", "block");
 
-var area = d3.area()
-    .x(function (d, i) {
-        return x(d.data.date);
-    })
-    .y0(function (d) {
-        return y(d[0]);
-    })
-    .y1(function (d) {
-        return y(d[1]);
+    const g = svg
+        .append("g")
+        .attr("transform", `translate(0, ${height / 2})`)
+        .selectAll("g")
+        .data(colour.domain())
+        .join("g")
+        .attr("transform", (d, i) => `translate(${spacing[i - 1] || marginLeft}, 0)`);
+
+    g.append("circle")
+        .attr("fill", colour)
+        .attr("r", swatchRadius)
+        .attr("cx", swatchRadius)
+        .attr("cy", 0);
+
+    g.append("text")
+        .attr("x", swatchRadius * 2 + swatchPadding)
+        .attr("y", 0)
+        .attr("dominant-baseline", "central")
+        .style("font", labelFont)
+        .text(d => labelFormat(d));
+
+    return svg.node()
+
+}
+// adapted from https://observablehq.com/@mbostock/autosize-svg
+getLabelLength = (label, labelFont = "12px sans-serif") => {
+    const id = DOM.uid("label").id;
+    const svg = html`<svg>
+    <style> .${id} { font: ${labelFont} } </style>
+    <g id=${id}>
+      <text class="${id}">${DOM.text(label)}</text>
+    </g>
+  </svg>`;
+
+    // Add the SVG element to the DOM so we can determine its size.
+    document.body.appendChild(svg);
+
+    // Compute the bounding box of the content.
+    const width = svg.getElementById(id).getBBox().width;
+
+    // Remove the SVG element from the DOM.
+    document.body.removeChild(svg);
+
+    return width;
+}
+function StackedObject(data){
+    const races = [...new Set(data.map(d => d.race))];
+    const plot = Plot.plot({
+        x: {label: "Année"},
+        y: {
+            grid: true,
+            label: "Race",
+            tickFormat: "s",
+        },
+        color: {
+            domain: races,
+            color: "tableau10"
+        },
+        marks: [
+            Plot.areaY(data, Plot.stackY(Plot.groupX({y: "sum"}, {x: "date", y: "value", fill: "race"})))
+        ]
     });
 
-var g = svg.append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-
-d3.tsv("/data/stacked_data.tsv")
-    .then(function (data, error) {
-        // console.log(error)
-        // console.log(data)
-        // if (error) throw error;
-
-        var keys = data.columns.slice(1);
-
-        x.domain(d3.extent(data, function (d) {
-            return d.date;
-        }));
-        z.domain(keys);
-        stack.keys(keys);
-
-        var layer = g.selectAll(".layer")
-            .data(stack(data))
-            .enter().append("g")
-            .attr("class", "layer");
-
-        layer.append("path")
-            .attr("class", "area")
-            .style("fill", function (d) {
-                return z(d.key);
-            })
-            .attr("d", area);
-
-        layer.filter(function (d) {
-            return d[d.length - 1][1] - d[d.length - 1][0] > 0.01;
-        })
-            .append("text")
-            .attr("x", width - 6)
-            .attr("y", function (d) {
-                return y((d[d.length - 1][0] + d[d.length - 1][1]) / 2);
-            })
-            .attr("dy", ".35em")
-            .style("font", "10px sans-serif")
-            .style("text-anchor", "end")
-            .text(function (d) {
-                return d.key;
-            });
-
-        g.append("g")
-            .attr("class", "axis axis--x")
-            .attr("transform", "translate(0," + height + ")")
-            .call(d3.axisBottom(x));
-
-        g.append("g")
-            .attr("class", "axis axis--y")
-            .call(d3.axisLeft(y).ticks(10, "%"));
-    })
-    .catch((error) => {
-        console.error(error);
-    });
-
-function type(d, i, columns) {
-    d.date = parseDate(d.date);
-    for (var i = 1, n = columns.length; i < n; ++i) d[columns[i]] = d[columns[i]] / 100;
-    return d;
+    wrap = (...elems) => {
+        const div = document.getElementById("stacked_area");
+        elems.forEach(el => div.appendChild(el));
+        return div;
+    }
+    return wrap(
+        // Swatches(d3.scaleOrdinal([...new Set(data.map(d => d.race))], d3.schemeCategory10)),
+       /* swatches({
+            colour: d3.scaleOrdinal(["blueberries with redundant text", "oranges with redundant text", "apples with redundant text"], d3.schemeCategory10),
+            labelFormat: l => l.replace("with redundant text", "")
+        }),*/
+        plot
+    );
 }

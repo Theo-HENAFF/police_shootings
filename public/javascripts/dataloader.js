@@ -20,7 +20,6 @@ d3.csv("/data/us-cities-top-1k.csv").then(function (d) {
 })
 
 d3.csv("/data/shootings.csv").then(function (dsh) {
-    // format the data
     dsh.sort((a, b) => (a.state > b.state) ? 1 : ((b.state > a.state) ? -1 : 0)).forEach(function (d) {
         var i = data.children.findIndex(x => x.code === d.state);
         data.children[i].sum_value = data.children[i].sum_value + 1;
@@ -29,7 +28,14 @@ d3.csv("/data/shootings.csv").then(function (dsh) {
         } else {
             data.children[i].children[data.children[i].children.findIndex(x => x.name === d.city)].value++;
         }
-        data.children[i].shooting.push({date: d.date, race: d.race});
+
+        if (data.children[i].shooting.findIndex(x => (x.date === d.date.split('-')[0]) && (x.race === d.race)) === -1) {
+            data.children[i].shooting.push({date: d.date.split('-')[0], race: d.race, value: 1});
+        } else {
+            var o = data.children[i].shooting.findIndex(x => (x.date === d.date.split('-')[0]) &&(x.race === d.race))
+            data.children[i].shooting[o].value++;
+        }
+
     });
 
 }).then(function () {
@@ -88,4 +94,17 @@ d3.csv("/data/shootings.csv").then(function (dsh) {
     TreemapObject(sortedData);
 }).then(function () {
     TableObject(data);
+}).then(function () {
+    var stackedData = [];
+    data.children.forEach(state => state.shooting.forEach(function(shot){
+        if (stackedData.findIndex(x => (x.date === shot.date) && (x.race === shot.race)) === -1) {
+            stackedData.push(shot);
+        } else {
+            var o = stackedData.findIndex(x => (x.date === shot.date) && (x.race === shot.race))
+            stackedData[o].value++;
+        }
+    }));
+    stackedData.forEach(d => d.date = new Date(d.date));
+
+    StackedObject(stackedData);
 });
