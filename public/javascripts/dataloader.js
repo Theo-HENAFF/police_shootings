@@ -1,3 +1,6 @@
+const numCitiesPerState = 3
+
+
 // get the data
 var data = {children: []}
 d3.csv("/data/state_fips@2.csv").then(function (d) {
@@ -11,6 +14,7 @@ d3.csv("/data/state_fips@2.csv").then(function (d) {
 });
 
 d3.csv("/data/us-cities-top-1k.csv").then(function (d) {
+
     d.sort((a, b) => (a.state > b.state) ? 1 : ((b.state > a.state) ? -1 : 0)).forEach(function (d) {
         var i = data.children.findIndex(x => x.name === d.state);
         if (data.children[i].children.findIndex(x => x.name === d.city) === -1) {
@@ -78,14 +82,21 @@ d3.csv("/data/shootings.csv").then(function (dsh) {
         state.children = state.children.sort(function (a, b) {
             return b.value - a.value;
         })
-            .slice(0, 3+1)
+            .slice(0, numCitiesPerState+1) // Keep th top x city of the state
             .filter(function (item) {
-                return item.name != "Other"
+                return item.name != "Other" && item.value > 2
             });
-        sortedData.children.push(state);
+        if (state.children.length == 1) {
+            state.children = state.children.filter(function (item) {
+                return item.value > 5
+            });
+        }
+        if (state.children.length > 0) {
+            sortedData.children.push(state);
+        }
     });
 
-    TreemapObject(sortedData);
+    TreemapObject(sortedData, numCitiesPerState);
 }).then(function () {
     TableObject(data);
 });

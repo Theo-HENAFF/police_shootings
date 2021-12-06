@@ -1,4 +1,23 @@
-function TreemapObject(data) {
+function getTextWidth(text, font) {
+    // if given, use cached canvas for better performance
+    // else, create new canvas
+    var canvas = getTextWidth.canvas || (getTextWidth.canvas = document.createElement("canvas"));
+    var context = canvas.getContext("2d");
+    context.font = font;
+    var metrics = context.measureText(text);
+    return metrics.width;
+};
+function getTextHeight(text, font) {
+    // if given, use cached canvas for better performance
+    // else, create new canvas
+    var canvas = getTextWidth.canvas || (getTextHeight.canvas = document.createElement("canvas"));
+    var context = canvas.getContext("2d");
+    context.font = font;
+    var metrics = context.measureText(text);
+    return metrics.height;
+};
+
+function TreemapObject(data, topKCities) {
     // set the dimensions and margins of the graph
     const margin = {top: 10, right: 10, bottom: 10, left: 10},
         width = 800 - margin.left - margin.right,
@@ -22,7 +41,9 @@ function TreemapObject(data) {
     // Then d3.treemap computes the position of each element of the hierarchy
     d3.treemap()
         .size([width, height])
-        .padding(2.5)
+        .paddingTop(15)
+        .paddingRight(7)
+        .paddingInner(3)
         (root)
 
     let tooltip = d3
@@ -103,44 +124,55 @@ function TreemapObject(data) {
     //     .attr("fill", "white")
 
     // and to add the text labels
-    // svg
-    //     .selectAll("vals")
-    //     .data(root.leaves())
-    //     .enter()
-    //     .append("text")
-    //     .attr("x", function (d) {
-    //         return d.x0 + 5
-    //     })    // +10 to adjust position (more right)
-    //     .attr("y", function (d) {
-    //         return d.y0 + 35
-    //     })    // +20 to adjust position (lower)
-    //     .text(function (d) {
-    //         return d.data.value
-    //     })
-    //     .attr("font-size", "11px")
-    //     .attr("fill", "white")
+    svg
+        .selectAll("vals")
+        .data(root.leaves())
+        .enter()
+        .append("text")
+        .attr("x", function (d) {
+            return d.x0 + 4
+        })    // +4 to adjust position (more right)
+        .attr("y", function (d) {
+            return d.y0 + 10
+        })    // +10 to adjust position (lower)
+        .text(function (d) {
+            if (d.x1-d.x0 - 10 >= getTextWidth(d.data.name.toString(), "11px") && d.y1-d.y0 > 11) {
+                return d.data.name
+            }
+        })
+        .attr("font-size", "11px")
+        .attr("fill", "white")
+
 
     // Add title for the 3 groups
-    // svg
-    //     .selectAll("titles")
-    //     .data(root.descendants().filter(function (d) {
-    //         return d.depth == 1
-    //     }))
-    //     .enter()
-    //     .append("text")
-    //     .attr("x", function (d) {
-    //         return d.x0
-    //     })
-    //     .attr("y", function (d) {
-    //         return d.y0 - 21
-    //     })
-    //     .text(function (d) {
-    //         return d.data.name
-    //     })
-    //     .attr("font-size", "19px")
-    //     .attr("fill", function (d) {
-    //         return color(d.data.name)
-    //     })
+    svg
+        .selectAll("titles")
+        .data(root.descendants().filter(function (d) {
+            return d.depth == 1
+        }))
+        .enter()
+        .append("text")
+        .attr("x", function (d) {
+            return d.x0
+        })
+        .attr("y", function (d) {
+            return d.y0 + 10
+        })
+        .text(function (d) {
+            if (d.x1-d.x0 - 15 >= getTextWidth(d.data.name.replaceAll(' ', '_'), "14px")) {
+                return d.data.name
+            } else if (d.x1-d.x0 - 10 >= getTextWidth(d.data.code, "14px")) {
+                return d.data.code
+            };
+        })
+        .attr("font-size", "14px")
+        .attr("fill", function (d) {
+            if (d.x1-d.x0 - 10 >= getTextWidth(d.data.name, "14px")) {
+                return color(d.data.name)
+            } else if (d.x1-d.x0 - 10 >= getTextWidth(d.data.code, "14px")) {
+                return color(d.data.name)
+            };
+        })
 
     // Add title for the 3 groups
     // svg
