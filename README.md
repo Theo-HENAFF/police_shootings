@@ -25,13 +25,12 @@ If you are using a local dataset, add it in `public/data/` and refer to it in `c
 ## To do list
 - [X]  Mise en place du data object pour la Treemap
 - [ ]  Toggle switch NB Hab/densité de population
-- [ ]  Stacked Area Chart
+- [X]  Stacked Area Chart
 - [X]  Clean la treemap
 - [ ]  Tableau (Description, état, population, ...)
 - [ ]  Adaptabilité du tableau au survol
 - [ ]  Homogénéisation des couleurs
-- [ ]  Homogénéisation des tailles graphiques (Responsive ?)
-- [ ]  **BONUS :**  Micro graphique au survol.
+- [ ]  Homogénéisation des tailles graphiques (Responsive ?
 
 ## Source list
 
