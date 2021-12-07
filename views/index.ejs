@@ -4,6 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Police shootings</title>
     <link rel="stylesheet" href="stylesheets/style.css">
+    <link rel="icon" href="favico.png" />
     <link rel="stylesheet"  href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -11,79 +12,209 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </head>
 
-<header class="header">
+<body>
+<header class="header" style="margin-bottom:250px">
     <nav class="bg-white text-dark navbar navbar-expand-lg fixed-top py-3">
         <div class="container">
-            <h1>Police Shooting in the US</h1>
-
-            <a id="toggle-explications" class="btn nav-link text-uppercase font-weight-bold" onclick="toggleButton()" data-toggle="collapse" href=".multi-collapse" role="button">
+            <h1>Police Shooting in the US 2015 - 2020</h1>
+            <a id="toggle-explications" class="btn nav-link text-uppercase font-weight-bold text-success" onclick="toggleButton()" data-toggle="collapse" href=".multi-collapse" role="button">
                 Afficher les explications
             </a>
         </div>
     </nav>
 </header>
+<div class="container text-center" style="margin-bottom:50px">
+    <h4>Les réseaux sociaux sont remplis d'images tragiques impliquant la police aux États-Unis.<br/>
+        Comment les visualisations peuvent aider à se forger une opinion ? </h4>
+    <h6 style="font-style: italic;">Un projet de Paul Grisolia et Théo Henaff</h6>
 
-<body>
-<br><br><br><br><br>
+    <blockquote class="blockquote" style="margin:50px 100px 100px 50px">
+        <p class="mb-0">Our hearts are heavy over yet another shooting of a Black man, Daunte Wright, at the hands of police.
+                        It’s important to conduct a full and transparent investigation, but this is also a
+                        reminder of just how badly we need to reimagine policing and public safety in this country.</p>
+        <footer class="blockquote-footer" style="margin-top: 20px">Barack Obama, <cite title="Twitter">Twitter, 13 avril 2021</cite></footer>
+    </blockquote>
+
+    <p style="font-style: italic;"> Les données répertorient les personnes tuées par la police Américaine de 2015 à 2020.
+        Ces données sont publiées par le FBI et mise à disposition sur <a href="https://www.kaggle.com/mrmorj/data-police-shootings">Kaggle</a>. </p>
+</div>
 
 <div class="container">
   <div class="row">
     <div  id="map" class="col">
-        <h2>Carte du nombre de meurtre par la police par état</h2>
+        <h2>Répartition par état des meurtres par la police (2015-2020) </h2>
         <div class="collapse multi-collapse" id="collapseExample">
-          <div class="card card-body">
-            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-          </div>
-        </div>
-    </div>
-
-  </div>
-  <div class="row">
-    <div id="stacked_area" class="col">
-        <div>
-            <h2>Stacked area chart</h2>
-            <h4>Réprésente l'évolution du nombre de morts en fonction de l'ethnie au cours du temps</h4>
-            <div class="collapse multi-collapse" id="collapseExample3">
-              <div class="card card-body">
-                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-              </div>
+            <div class="card-header">
+                <h5>Carte interactive :</h5>
+                <ul class="nav nav-pills mb-2  card-header-pills" id="pills-tab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab">Justification</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab">Visualisation</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab">Axe d'amélioration</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="tab-content card-body" id="pills-tabContent">
+                <div class="tab-pane fade show active card-text" id="pills-home" role="tabpanel">
+                        Ce graphique évoque sans aucun doute les États-unis, par le simple agencement de blocs.
+                        On retrouve les différents états correctement localisés.
+                        Cette épuration du fond de carte favorise la concentration sur les données et le message du graphique.
+                        Les blocs représentants les états sont colorés de façon à représenter les morts par état.
+                        Cela permet à l’observateur de se construire une carte mentale de la situation.
+                        En outre, d’un regard ce type de visualisation favorise
+                        l’appropriation du sujet en localisant les chiffres.<br/>
+                        Une option est proposée afin de rapporter le nombre de morts au nombre d'habitants dans l'état.
+                </div>
+                <div class="tab-pane fade card-text" id="pills-profile" role="tabpanel">
+                    <p> Il a était de choisir une couleur sombre proche de la terre afin de ne pas rajouter de
+                        dramatique aux données. Cette gamme de couleur rapproche en outre les valeurs faibles et moyennes
+                        et mets particulièrement en avant les extrêmes.  </p>
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>Variable</th>
+                            <th>Type / Echelle de mesure</th>
+                            <th>Représentation</th>
+                        </tr>
+                        <tr>
+                            <td>Localisation</td>
+                            <td>Nominale</td>
+                            <td>Position</td>
+                        </tr>
+                        <tr>
+                            <td>Nombre de morts</td>
+                            <td>Quantitatif (Numérique)</td>
+                            <td>Couleurs</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="tab-pane fade" id="pills-contact" role="tabpanel">
+                    <p> Pour pousser encore plus loin la puissance de cette visualisation, nous aurions pu proposer l'affichage au survol du nombre de morts par an.</p>
+                </div>
             </div>
         </div>
     </div>
+
+  </div>
+  <div class="row" style="margin-top:200px;">
+    <div id="stacked_area" class="col">
+        <div>
+            <h2>Evolution du nombre de morts par ethnie au cours du temps</h2>
+            <div class="collapse multi-collapse" id="collapseExample1">
+                <div class="card-header">
+                    <h5>Stacked Area Chart :</h5>
+                    <ul class="nav nav-pills mb-2  card-header-pills" id="pills-tab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-sj" role="tab">Justification</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-sv" role="tab">Visualisation</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tab-content card-body" id="pills-tabContent">
+                    <div class="tab-pane fade show active card-text" id="pills-sj" role="tabpanel">
+                        Ces courbes permettent de visualiser par les changements d'aires la répartition des personnes tués par ethnies.
+                        Le problème des violences policières est un problème raciste. Les données étant disponible aux États-unis,
+                        il nous semble important de tenir compte de cette indicateur dans notre analyse du sujet. <br/>
+                        La checkbox apporte encore plus de précision aux données en rapportant ces valeurs à la proportion
+                        des ethnies dans la population américaine. Cela permet de mettre en avant que l'unité de mesure peut entrainer
+                        de grandes déformations.
+                    </div>
+                    <div class="tab-pane fade card-text" id="pills-sv" role="tabpanel">
+                        <p> Les couleurs sont là aussi sobres et harmonisés avec le reste des graphiques.
+                            La palette choisie s'éloigne volontairement de ce qui pourrait évoquer une couleur de peau ou la couleur du sang.
+                            Cela oblige, il nous semble, l'observateur à se pencher sur les légendes avant d'émettre des jugements.</p>
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Variable</th>
+                                <th>Type / Echelle de mesure</th>
+                                <th>Représentation</th>
+                            </tr>
+                            <tr>
+                                <td>Année</td>
+                                <td>Echelle Intervalle</td>
+                                <td>Position</td>
+                            </tr>
+                            <tr>
+                                <td>Nombre de morts</td>
+                                <td>Quantitatif (Numérique)</td>
+                                <td>Taille</td>
+                            </tr>
+                            <tr>
+                                <td>Ethnie</td>
+                                <td>Nominale</td>
+                                <td>Couleur & Taille (Aire)</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
     <div id="treemap" class="col">
-        <h2>Map de répartition globale des tueries en fonction par villes (top 3) et états</h2>
-        <h4>Voir les détails complet au survol</h4>
+        <h2>Répartition hierarchique des tueries par états et les 3 villes les plus touchées</h2>
+        <h6>Voir les détails complets au survol</h6>
         <div class="collapse multi-collapse" id="collapseExample2">
-          <div class="card card-body">
-            <p>
-                Ce graphique met en lumière la masse par état sur l'ensemble du pays.
-            </p><p>
-                Afin de ne pas saturer le grpahique, on n'affiche que les 3 villes avec le plus de morts par état.
-            </p><p>
-                De même, pour ne pas superposer les écritures, si les rectangles sont trop petit on n'affiche pas le nom de la ville.
-            </p><p>
-                Enfin, en cas de largeur d'un "rectangle état" pas assez large, on remplace son nom par son code voire par rien.
-            </p>
-          </div>
+            <div class="card-header">
+                <h5>Treemap :</h5>
+                <ul class="nav nav-pills mb-2  card-header-pills" id="pills-tab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-tj" role="tab">Justification</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-tv" role="tab">Visualisation</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-ta" role="tab">Axe d'amélioration</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="tab-content card-body" id="pills-tabContent">
+                <div class="tab-pane fade show active card-text" id="pills-tj" role="tabpanel">
+                    Ce graphique met en lumière la masse par état sur l'ensemble du pays. <br/>
+                    Afin de ne pas saturer le grpahique, on n'affiche que les 3 villes avec le plus de morts par état. <br/>
+                    De même, pour ne pas superposer les écritures, si les rectangles sont trop petit on n'affiche pas le nom de la ville. <br/>
+                    Enfin, en cas de largeur d'un "rectangle état" pas assez large, on remplace son nom par son code voire par rien. <br/>
+                </div>
+                <div class="tab-pane fade card-text" id="pills-tv" role="tabpanel">
+                    <p> Les couleurs sont là aussi sobres et harmonisés avec le reste des graphiques.
+                        La palette choisie s'éloigne volontairement de ce qui pourrait évoquer la couleur du sang ou d'autres sujets sensibles.
+                        Cela oblige, il nous semble, l'observateur à se pencher sur les légendes avant d'émettre des jugements.</p>
+
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>Variable</th>
+                            <th>Type / Echelle de mesure</th>
+                            <th>Représentation</th>
+                        </tr>
+                        <tr>
+                            <td>Localisation</td>
+                            <td style="font-weight: bold">Ordinale</td>
+                            <td>Position</td>
+                        </tr>
+                        <tr>
+                            <td>Nombre de morts</td>
+                            <td>Quantitatif (Numérique)</td>
+                            <td style="font-weight: bold">Aire / Taille</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="tab-pane fade" id="pills-ta" role="tabpanel" aria-labelledby="pills-contact-tab">
+                    <p> Afin de gagner en représentativité deux améliorations nous semblent possible pour cette visualisation.
+                        La première est une action au zoom ou au survol qui "zoomerait" sur l'état afin d'afficher un plus grande précision.
+                        La seconde est l'organisation de la treemap par "super-régions" : West-Coast, Mid-West, ... </p>
+                </div>
+            </div>
         </div>
     </div>
 
-  </div>
-    <div class="row">
-      <div id="commentaires" class="col">
-          <h2>Explications</h2>
-            <p>
-                Pal an deskadurezh eo diorren personelezh mab-den ha lakaat doujañ muioc'h gwirioù mab-den hag ar frankizioù diazez. Drezi e klaskor kreskiñ ar c'hengompren, an habaskted hag ar vignoniezh etre an holl vroadoù hag an holl strolladoù a ouenn pe a relijion disheñvel, hag ivez kas war-raok obererezh ar Broadoù-Unanet evit derc'hel ar peoc'h.
-            </p>
-            <p>
-                Gwir o deus ar wazed hag ar merc'hed adalek an oad da zimeziñ, ne vern o gouenn, o broadelezh, pe o relijion, da zimeziñ ha da sevel tiegezh. Gwirioù par zo dezho e-keñver an dimeziñ, e-pad ar briedelezh hag e-keñver an dibriediñ.
+    </div>
 
-            </p>
-            <p>
-                An neb a labour en deus gwir da vezañ paeet reizh ha mat evit ma c'hellfe, eñ hag e diegezh, bevañ en un doare a zere ouzh dellezegezh mab-den, ha mar deo ret ouzhpenn, da gaout gwarez kevredigezhel dre hentoù all.
-            </p>
-
-      </div>
+    <div class="row" style="height: 200px;">
     </div>
 </div>
 
