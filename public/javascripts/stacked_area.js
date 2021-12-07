@@ -80,7 +80,6 @@ function swatches({color, ...options}) {
 
 function StackedObject(data){
     const races = [...new Set(data.map(d => d.race))];
-    console.log(data)
     const plot = Plot.plot({
         x: {label: "Année"},
         y: {

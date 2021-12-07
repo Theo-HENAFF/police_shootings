@@ -59,8 +59,8 @@ d3.csv("/data/shootings.csv").then(function (dsh) {
 
     // set the dimensions and margins of the graph
     var margin_map = {top: 10, right: 10, bottom: 10, left: 10},
-        width_map = 600 - margin_map.left - margin_map.right,
-        height_map = 400 - margin_map.top - margin_map.bottom;
+        width_map = 1200 - margin_map.left - margin_map.right,
+        height_map = 800 - margin_map.top - margin_map.bottom;
 
     const svg = d3.select("#map").append("svg")
         .attr("font-size", "09pt")
@@ -106,11 +106,6 @@ d3.csv("/data/shootings.csv").then(function (dsh) {
     const heightTreemap = 400;
     TreemapObject(sortedData, numCitiesPerState, widthTreemap, heightTreemap);
 
-// }).then(function () {
-//     const widthTable = 600;
-//     const heightTable = 400;
-//
-//     TableObject(data, widthTable, heightTable);
 
 }).then(function () {
     var stackedData = [];

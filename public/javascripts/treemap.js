@@ -60,9 +60,7 @@ function TreemapObject(data, topKCities, widthTreemap, heightTreemap) {
         .style('padding', '5px');
 
     // prepare a color scale
-    var color = d3.scaleOrdinal()
-        .domain(["boss1", "boss2", "boss3", "boss3", "boss3"])
-        .range(["#942E5D", "#E0D572", "#E05C9A", "#46CBE0", "#358794"])
+    var color = d3.scaleOrdinal(["boss1", "boss2", "boss3", "boss3", "boss3"], d3.schemeTableau10)
 
     // And a opacity scale
     var opacity = d3.scaleLinear()
