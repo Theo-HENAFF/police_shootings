@@ -106,11 +106,11 @@ d3.csv("/data/shootings.csv").then(function (dsh) {
     const heightTreemap = 400;
     TreemapObject(sortedData, numCitiesPerState, widthTreemap, heightTreemap);
 
-}).then(function () {
-    const widthTable = 600;
-    const heightTable = 400;
-
-    TableObject(data, widthTable, heightTable);
+// }).then(function () {
+//     const widthTable = 600;
+//     const heightTable = 400;
+//
+//     TableObject(data, widthTable, heightTable);
 
 }).then(function () {
     var stackedData = [];
