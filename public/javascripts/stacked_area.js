@@ -1,74 +1,83 @@
-function swatches({
-                      colour,
-                      swatchRadius = 6,
-                      swatchPadding = swatchRadius * (2/3),
-                      labelFont = "12px sans-serif",
-                      labelFormat = x => x,
-                      labelPadding = swatchRadius * 1.5,
-                      marginLeft = 0
-                  } = {}) {
+// Copyright 2021, Observable Inc.
+// Released under the ISC license.
+// https://observablehq.com/@d3/color-legend
+function Swatches(color, {
+    columns = null,
+    format,
+    unknown: formatUnknown,
+    swatchSize = 15,
+    swatchWidth = swatchSize,
+    swatchHeight = swatchSize,
+    marginLeft = 0
+} = {}) {
+    const id = `-swatches-${Math.random().toString(16).slice(2)}`;
+    const unknown = formatUnknown == null ? undefined : color.unknown();
+    const unknowns = unknown == null || unknown === d3.scaleImplicit ? [] : [unknown];
+    const domain = color.domain().concat(unknowns);
+    if (format === undefined) format = x => x === unknown ? formatUnknown : x;
 
-    const spacing = colour
-        .domain()
-        .map(d => labelFormat(d))
-        .map(d => getLabelLength(d, labelFont) + (swatchRadius * 2) + swatchPadding + labelPadding)
-        .map((_, i, g) => d3.cumsum(g)[i] + marginLeft)
+    function entity(character) {
+        return `&#${character.charCodeAt(0).toString()};`;
+    }
 
-    const width = d3.max(spacing)
-    const height = swatchRadius * 2 + swatchPadding * 2
+    if (columns !== null) return htl.html`<div style="display: flex; align-items: center; margin-left: ${+marginLeft}px; min-height: 33px; font: 10px sans-serif;">
+  <style>
 
-    const svg = d3.create("svg")
-        .attr("width", width)
-        .attr("height", height)
-        .attr("viewBox", [0, 0, width, height])
-        .style("overflow", "visible")
-        .style("display", "block");
-
-    const g = svg
-        .append("g")
-        .attr("transform", `translate(0, ${height / 2})`)
-        .selectAll("g")
-        .data(colour.domain())
-        .join("g")
-        .attr("transform", (d, i) => `translate(${spacing[i - 1] || marginLeft}, 0)`);
-
-    g.append("circle")
-        .attr("fill", colour)
-        .attr("r", swatchRadius)
-        .attr("cx", swatchRadius)
-        .attr("cy", 0);
-
-    g.append("text")
-        .attr("x", swatchRadius * 2 + swatchPadding)
-        .attr("y", 0)
-        .attr("dominant-baseline", "central")
-        .style("font", labelFont)
-        .text(d => labelFormat(d));
-
-    return svg.node()
-
+.${id}-item {
+  break-inside: avoid;
+  display: flex;
+  align-items: center;
+  padding-bottom: 1px;
 }
-// adapted from https://observablehq.com/@mbostock/autosize-svg
-getLabelLength = (label, labelFont = "12px sans-serif") => {
-    const id = DOM.uid("label").id;
-    const svg = html`<svg>
-    <style> .${id} { font: ${labelFont} } </style>
-    <g id=${id}>
-      <text class="${id}">${DOM.text(label)}</text>
-    </g>
-  </svg>`;
 
-    // Add the SVG element to the DOM so we can determine its size.
-    document.body.appendChild(svg);
-
-    // Compute the bounding box of the content.
-    const width = svg.getElementById(id).getBBox().width;
-
-    // Remove the SVG element from the DOM.
-    document.body.removeChild(svg);
-
-    return width;
+.${id}-label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: calc(100% - ${+swatchWidth}px - 0.5em);
 }
+
+.${id}-swatch {
+  width: ${+swatchWidth}px;
+  height: ${+swatchHeight}px;
+  margin: 0 0.5em 0 0;
+}
+
+  </style>
+  <div style=${{width: "100%", columns}}>${domain.map(value => {
+        const label = `${format(value)}`;
+        return htl.html`<div class=${id}-item>
+      <div class=${id}-swatch style=${{background: color(value)}}></div>
+      <div class=${id}-label title=${label}>${label}</div>
+    </div>`;
+    })}
+  </div>
+</div>`;
+
+    return htl.html`<div style="display: flex; align-items: center; min-height: 33px; margin-left: ${+marginLeft}px; font: 10px sans-serif;">
+  <style>
+
+.${id} {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 1em;
+}
+
+.${id}::before {
+  content: "";
+  width: ${+swatchWidth}px;
+  height: ${+swatchHeight}px;
+  margin-right: 0.5em;
+  background: var(--color);
+}
+
+  </style>
+  <div>${domain.map(value => htl.html`<span class="${id}" style="--color: ${color(value)}">${format(value)}</span>`)}</div>`;
+}
+function swatches({color, ...options}) {
+    return Swatches(color, options);
+}
+
 function StackedObject(data){
     const races = [...new Set(data.map(d => d.race))];
     const plot = Plot.plot({
@@ -93,11 +102,7 @@ function StackedObject(data){
         return div;
     }
     return wrap(
-        // Swatches(d3.scaleOrdinal([...new Set(data.map(d => d.race))], d3.schemeCategory10)),
-       /* swatches({
-            colour: d3.scaleOrdinal(["blueberries with redundant text", "oranges with redundant text", "apples with redundant text"], d3.schemeCategory10),
-            labelFormat: l => l.replace("with redundant text", "")
-        }),*/
+        Swatches(d3.scaleOrdinal([...new Set(data.map(d => d.race))], d3.schemeCategory10)),
         plot
     );
 }
