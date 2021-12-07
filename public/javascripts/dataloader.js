@@ -36,7 +36,7 @@ d3.csv("/data/shootings.csv").then(function (dsh) {
         if (data.children[i].shooting.findIndex(x => (x.date === d.date.split('-')[0]) && (x.race === d.race)) === -1) {
             data.children[i].shooting.push({date: d.date.split('-')[0], race: d.race, value: 1});
         } else {
-            var o = data.children[i].shooting.findIndex(x => (x.date === d.date.split('-')[0]) &&(x.race === d.race))
+            var o = data.children[i].shooting.findIndex(x => (x.date === d.date.split('-')[0]) && (x.race === d.race))
             data.children[i].shooting[o].value++;
         }
 
@@ -59,8 +59,8 @@ d3.csv("/data/shootings.csv").then(function (dsh) {
 
     // set the dimensions and margins of the graph
     var margin_map = {top: 10, right: 10, bottom: 10, left: 10},
-        width_map = 800 - margin_map.left - margin_map.right,
-        height_map = 450 - margin_map.top - margin_map.bottom;
+        width_map = 600 - margin_map.left - margin_map.right,
+        height_map = 400 - margin_map.top - margin_map.bottom;
 
     const svg = d3.select("#map").append("svg")
         .attr("font-size", "09pt")
@@ -88,7 +88,7 @@ d3.csv("/data/shootings.csv").then(function (dsh) {
         state.children = state.children.sort(function (a, b) {
             return b.value - a.value;
         })
-            .slice(0, numCitiesPerState+1) // Keep th top x city of the state
+            .slice(0, numCitiesPerState + 1) // Keep th top x city of the state
             .filter(function (item) {
                 return item.name != "Other" && item.value > 2
             });
@@ -102,12 +102,19 @@ d3.csv("/data/shootings.csv").then(function (dsh) {
         }
     });
 
-    TreemapObject(sortedData, numCitiesPerState);
+    const widthTreemap = 600;
+    const heightTreemap = 400;
+    TreemapObject(sortedData, numCitiesPerState, widthTreemap, heightTreemap);
+
 }).then(function () {
-    TableObject(data);
+    const widthTable = 600;
+    const heightTable = 400;
+
+    TableObject(data, widthTable, heightTable);
+
 }).then(function () {
     var stackedData = [];
-    data.children.forEach(state => state.shooting.forEach(function(shot){
+    data.children.forEach(state => state.shooting.forEach(function (shot) {
         if (stackedData.findIndex(x => (x.date === shot.date) && (x.race === shot.race)) === -1) {
             stackedData.push(shot);
         } else {

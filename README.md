@@ -26,7 +26,7 @@ If you are using a local dataset, add it in `public/data/` and refer to it in `c
 - [X]  Mise en place du data object pour la Treemap
 - [ ]  Toggle switch NB Hab/densité de population
 - [ ]  Stacked Area Chart
-- [ ]  Clean la treemap
+- [X]  Clean la treemap
 - [ ]  Tableau (Description, état, population, ...)
 - [ ]  Adaptabilité du tableau au survol
 - [ ]  Homogénéisation des couleurs

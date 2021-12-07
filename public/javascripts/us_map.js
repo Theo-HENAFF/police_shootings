@@ -33,7 +33,7 @@ class GridMap {
         this._rows = 0;
         this._x = null;
         this._y = null;
-        this._bandwidth = { x: 0, y: 0, hx: 0, hy: 0 };
+        this._bandwidth = {x: 0, y: 0, hx: 0, hy: 0};
 
         this._data = null;
         this._chartData = null;
@@ -44,7 +44,7 @@ class GridMap {
             total: ""
         };
 
-        this._contains = { data: true, values: true };
+        this._contains = {data: true, values: true};
 
         this._c = null; // cell color scale
         this._t = null; // text color scale
@@ -59,7 +59,7 @@ class GridMap {
         this._customSquareOverlay = null;
         this._customCircleOverlay = null;
 
-        this._uniqueId = new String(Date.now() * Math.random()).replace(".", "");
+        this._uniqueId = String(Date.now() * Math.random()).replace(".", "");
     }
 
     size(_) {
@@ -131,8 +131,7 @@ class GridMap {
         if (this._width / this._cols < this._height / this._rows) {
             this._x.range([0, this._width - top]);
             this._y.range([top, this._width / this._cols * this._rows]);
-        }
-        else {
+        } else {
             this._x.range([0, this._height / this._rows * this._cols - top]);
             this._y.range([top, this._height]);
         }
@@ -156,8 +155,7 @@ class GridMap {
             this._style.sizeByValue = false;
             this._style.showOverlay = false;
             this._style.showOverlayLegend = false;
-        }
-        else if (!this._contains.values) {
+        } else if (!this._contains.values) {
             this._style.showOverlay = false;
             this._style.showOverlayLegend = false;
         }
@@ -229,9 +227,10 @@ class GridMap {
                 .attr("transform", d => `translate(${this._x(d.col)},${this._y(d.row)})`)
                 // avoid interfering with the initial transition by delaying to attach mouse events
                 .transition().delay(this._initDuration)
-                .on("end", () => { this._attachEvents(cells); });
-        }
-        else
+                .on("end", () => {
+                    this._attachEvents(cells);
+                });
+        } else
             this._attachEvents(cells);
 
         this._miniLegend = this._container
@@ -284,8 +283,7 @@ class GridMap {
                     .attr("y", d => -d.r + size)
                     .attr("width", d => d.r * 2)
                     .attr("height", d => d.r * 2);
-            }
-            else {
+            } else {
                 rect.attr("width", size)
                     .attr("height", size);
             }
@@ -321,8 +319,7 @@ class GridMap {
                     const getSize = style.sizeByValue ? d => d.r * 2 : d => size;
                     this._customSquareOverlay(g, getSize, this._ov);
                 });
-            }
-            else {
+            } else {
                 og.append("g")
                     .selectAll("rect")
                     .data(d => this._treemap(d))
@@ -384,11 +381,10 @@ class GridMap {
                     const getSize = style.sizeByValue ? d => d.r * 2 : d => size;
                     this._customCircleOverlay(g, getSize, this._ov);
                 });
-            }
-            else {
+            } else {
                 og.append("g")
                     .selectAll("path")
-                    .data(d => d3.pie()(d.values).map(p => ({ pie: p, data: d })))
+                    .data(d => d3.pie()(d.values).map(p => ({pie: p, data: d})))
                     .join("path")
                     .attr("class", "mini")
                     //.attr("fill", (d, i) => this._ov(this._field.values[i]))
@@ -457,8 +453,7 @@ class GridMap {
             r = d.r;
             left = this._x(d.col) + bandwidth.x + 10 + (d.r - bandwidth.hx);
             top = this._y(d.row);
-        }
-        else {
+        } else {
             r = bandwidth.hx;
             left = this._x(d.col) + bandwidth.x + 10;
             top = this._y(d.row);
@@ -548,17 +543,17 @@ class GridMap {
 
             if (gap === 0) return [];
 
-            var curr = { floor: min, ceiling: 0 };
+            var curr = {floor: min, ceiling: 0};
             const s = [curr];
             for (var i = min + gap; i <= max - gap; i += gap) {
                 const p = Math.pow(10, Math.round(i).toString().length - 2);
                 const v = Math.floor(i / p) * p;
                 curr.ceiling = v;
-                curr = { floor: v, ceiling: 0 };
+                curr = {floor: v, ceiling: 0};
                 s.push(curr);
             }
             curr.ceiling = max;
-            s.push({ floor: max, ceiling: Number.MAX_VALUE });
+            s.push({floor: max, ceiling: Number.MAX_VALUE});
             return s;
         }
     }
@@ -566,7 +561,7 @@ class GridMap {
     _pack() {
         return d3.pack()
             .size([this._width, this._height])(
-                d3.hierarchy({ children: this._chartData })
+                d3.hierarchy({children: this._chartData})
                     .sum(d => d.total))
             .leaves()
             .map(d => Object.assign(d, d.data));
@@ -576,7 +571,7 @@ class GridMap {
         const size = this._style.sizeByValue ? [d.r * 2, d.r * 2] : [this._bandwidth.x, this._bandwidth.y];
         return d3.treemap()
             .size(size)
-            (d3.hierarchy({ children: d.values }).sum(d => d))
+            (d3.hierarchy({children: d.values}).sum(d => d))
             .leaves();
     }
 

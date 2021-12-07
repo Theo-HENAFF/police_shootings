@@ -6,7 +6,8 @@ function getTextWidth(text, font) {
     context.font = font;
     var metrics = context.measureText(text);
     return metrics.width;
-};
+}
+
 function getTextHeight(text, font) {
     // if given, use cached canvas for better performance
     // else, create new canvas
@@ -15,13 +16,13 @@ function getTextHeight(text, font) {
     context.font = font;
     var metrics = context.measureText(text);
     return metrics.height;
-};
+}
 
-function TreemapObject(data, topKCities) {
+function TreemapObject(data, topKCities, widthTreemap, heightTreemap) {
     // set the dimensions and margins of the graph
     const margin = {top: 10, right: 10, bottom: 10, left: 10},
-        width = 800 - margin.left - margin.right,
-        height = 450 - margin.top - margin.bottom;
+        width = widthTreemap - margin.left - margin.right,
+        height = heightTreemap - margin.top - margin.bottom;
 
     // append the svg object to the body of the page
     const svg = d3.select("#treemap")
@@ -136,7 +137,7 @@ function TreemapObject(data, topKCities) {
             return d.y0 + 10
         })    // +10 to adjust position (lower)
         .text(function (d) {
-            if (d.x1-d.x0 - 10 >= getTextWidth(d.data.name.toString(), "11px") && d.y1-d.y0 > 11) {
+            if (d.x1 - d.x0 - 10 >= getTextWidth(d.data.name.toString(), "11px") && d.y1 - d.y0 > 11) {
                 return d.data.name
             }
         })
@@ -159,19 +160,21 @@ function TreemapObject(data, topKCities) {
             return d.y0 + 10
         })
         .text(function (d) {
-            if (d.x1-d.x0 - 15 >= getTextWidth(d.data.name.replaceAll(' ', '_'), "14px")) {
+            if (d.x1 - d.x0 - 15 >= getTextWidth(d.data.name.replaceAll(' ', '_'), "14px")) {
                 return d.data.name
-            } else if (d.x1-d.x0 - 10 >= getTextWidth(d.data.code, "14px")) {
+            } else if (d.x1 - d.x0 - 10 >= getTextWidth(d.data.code, "14px")) {
                 return d.data.code
-            };
+            }
+
         })
         .attr("font-size", "14px")
         .attr("fill", function (d) {
-            if (d.x1-d.x0 - 10 >= getTextWidth(d.data.name, "14px")) {
+            if (d.x1 - d.x0 - 10 >= getTextWidth(d.data.name, "14px")) {
                 return color(d.data.name)
-            } else if (d.x1-d.x0 - 10 >= getTextWidth(d.data.code, "14px")) {
+            } else if (d.x1 - d.x0 - 10 >= getTextWidth(d.data.code, "14px")) {
                 return color(d.data.name)
-            };
+            }
+
         })
 
     // Add title for the 3 groups
@@ -182,4 +185,4 @@ function TreemapObject(data, topKCities) {
     //     .text("Three group leaders and 14 employees")
     //     .attr("font-size", "19px")
     //     .attr("fill", "grey")
-};
+}

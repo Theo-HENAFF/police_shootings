@@ -1,8 +1,17 @@
-function TableObject(dataObject) {
+function TableObject(dataObject, widthTable, heightTable) {
     let data = dataObject.children
-    // console.log(data.children)
+
+
+    // set the dimensions and margins of the graph
+    const margin = {top: 10, right: 10, bottom: 10, left: 10},
+        width = widthTable - margin.left - margin.right,
+        height = heightTable - margin.top - margin.bottom;
+
     var sortAscending = true;
-    var table = d3.select('#table').append('table');
+    var table = d3.select('#table').append('table')
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom);
+
     var titles = Object.keys(data[0])//d3.keys(data[0]);
     var headers = table.append('thead').append('tr')
         .selectAll('th')
