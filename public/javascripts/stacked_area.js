@@ -80,6 +80,7 @@ function swatches({color, ...options}) {
 
 function StackedObject(data){
     const races = [...new Set(data.map(d => d.race))];
+    console.log(data)
     const plot = Plot.plot({
         x: {label: "Année"},
         y: {
@@ -102,7 +103,7 @@ function StackedObject(data){
         return div;
     }
     return wrap(
-        Swatches(d3.scaleOrdinal([...new Set(data.map(d => d.race))], d3.schemeCategory10)),
+        Swatches(d3.scaleOrdinal([...new Set(data.map(d => d.race))], d3.schemeTableau10)),
         plot
     );
 }
