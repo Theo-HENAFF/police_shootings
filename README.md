@@ -47,3 +47,9 @@ https://observablehq.com/@mbostock/u-s-population-by-state-1790-1990
 https://bl.ocks.org/mbostock/3885211
 
 https://getbootstrap.com/docs/5.0/layout/grid/
+
+
+#### To change graphics
+https://stackoverflow.com/questions/34088550/d3-how-to-refresh-a-chart-with-new-data
+https://bl.ocks.org/d3noob/7030f35b72de721622b8
+
