@@ -60,7 +60,8 @@ function TreemapObject(data, topKCities, widthTreemap, heightTreemap) {
         .style('padding', '5px');
 
     // prepare a color scale
-    var color = d3.scaleOrdinal(["boss1", "boss2", "boss3", "boss3", "boss3"], d3.schemeTableau10)
+    var color = d3.scaleOrdinal(["b1", "b2", "b3", "b4", "b5", "b6", "b7", "b8", "b9", "b10"],
+                                ["#263220","#4f6e56","#7ba267","#9cc658","#E0E265", "#e7a636","#c16d34", "#9B3331"])
 
     // And a opacity scale
     var opacity = d3.scaleLinear()
@@ -158,7 +159,7 @@ function TreemapObject(data, topKCities, widthTreemap, heightTreemap) {
             return d.y0 + 10
         })
         .text(function (d) {
-            if (d.x1 - d.x0 - 15 >= getTextWidth(d.data.name.replaceAll(' ', '_'), "14px")) {
+            if (d.x1 - d.x0 - 20 >= getTextWidth(d.data.name.replaceAll(' ', '_'), "14px")) {
                 return d.data.name
             } else if (d.x1 - d.x0 - 10 >= getTextWidth(d.data.code, "14px")) {
                 return d.data.code

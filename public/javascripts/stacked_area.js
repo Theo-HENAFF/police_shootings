@@ -1,83 +1,3 @@
-// Copyright 2021, Observable Inc.
-// Released under the ISC license.
-// https://observablehq.com/@d3/color-legend
-function Swatches(color, {
-    columns = null,
-    format,
-    unknown: formatUnknown,
-    swatchSize = 15,
-    swatchWidth = swatchSize,
-    swatchHeight = swatchSize,
-    marginLeft = 0
-} = {}) {
-    const id = `-swatches-${Math.random().toString(16).slice(2)}`;
-    const unknown = formatUnknown == null ? undefined : color.unknown();
-    const unknowns = unknown == null || unknown === d3.scaleImplicit ? [] : [unknown];
-    const domain = color.domain().concat(unknowns);
-    if (format === undefined) format = x => x === unknown ? formatUnknown : x;
-
-    function entity(character) {
-        return `&#${character.charCodeAt(0).toString()};`;
-    }
-
-    if (columns !== null) return htl.html`<div style="display: flex; align-items: center; margin-left: ${+marginLeft}px; min-height: 33px; font: 10px sans-serif;">
-  <style>
-
-.${id}-item {
-  break-inside: avoid;
-  display: flex;
-  align-items: center;
-  padding-bottom: 1px;
-}
-
-.${id}-label {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: calc(100% - ${+swatchWidth}px - 0.5em);
-}
-
-.${id}-swatch {
-  width: ${+swatchWidth}px;
-  height: ${+swatchHeight}px;
-  margin: 0 0.5em 0 0;
-}
-
-  </style>
-  <div style=${{width: "100%", columns}}>${domain.map(value => {
-        const label = `${format(value)}`;
-        return htl.html`<div class=${id}-item>
-      <div class=${id}-swatch style=${{background: color(value)}}></div>
-      <div class=${id}-label title=${label}>${label}</div>
-    </div>`;
-    })}
-  </div>
-</div>`;
-
-    return htl.html`<div style="display: flex; align-items: center; min-height: 33px; margin-left: ${+marginLeft}px; font: 10px sans-serif;">
-  <style>
-
-.${id} {
-  display: inline-flex;
-  align-items: center;
-  margin-right: 1em;
-}
-
-.${id}::before {
-  content: "";
-  width: ${+swatchWidth}px;
-  height: ${+swatchHeight}px;
-  margin-right: 0.5em;
-  background: var(--color);
-}
-
-  </style>
-  <div>${domain.map(value => htl.html`<span class="${id}" style="--color: ${color(value)}">${format(value)}</span>`)}</div>`;
-}
-function swatches({color, ...options}) {
-    return Swatches(color, options);
-}
-
 function StackedObject(data){
     const races = [...new Set(data.map(d => d.race))];
     const plot = Plot.plot({
@@ -88,8 +8,9 @@ function StackedObject(data){
             tickFormat: "s",
         },
         color: {
-            domain: races,
-            color: "tableau10"
+            range: ["#263220","#4f6e56","#7ba267","#9cc658",
+                    "#E0E265", "#c16d34", "#9B3331"],
+            legend: true
         },
         marks: [
             Plot.areaY(data, Plot.stackY(Plot.groupX({y: "sum"}, {x: "date", y: "value", fill: "race"})))
@@ -102,7 +23,6 @@ function StackedObject(data){
         return div;
     }
     return wrap(
-        Swatches(d3.scaleOrdinal([...new Set(data.map(d => d.race))], d3.schemeTableau10)),
         plot
     );
 }

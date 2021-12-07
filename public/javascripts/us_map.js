@@ -25,7 +25,7 @@ class GridMap {
             showMapLegend: true
         };
         this._cellPalette = d3.interpolateYlGnBu;
-        this._textPalette = d3.interpolateCubehelixDefault;
+        this._textPalette = d3.scaleOrdinal(["#223A44"]);
         this._overlayPalette = d3.schemeTableau10;
 
         this._gridData = null;
@@ -72,6 +72,10 @@ class GridMap {
 
     cellPalette(_) {
         return arguments.length ? (this._cellPalette = _, this) : this._cellPalette;
+    }
+
+    textPalette(_) {
+        return arguments.length ? (this._textPalette = _, this) : this._textPalette;
     }
 
     overlayPalette(_) {
