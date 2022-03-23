@@ -1,0 +1,483 @@
+{
+  "name": "ENSIMAG",
+  "type": "directory",
+  "weight": 64.0,
+  "size": 4096,
+  "children": [
+    {
+      "name": "DataVisualization_MassShootings",
+      "type": "directory",
+      "weight": 64.0,
+      "size": 4096,
+      "children": []
+    },
+    {
+      "name": "folder_viz",
+      "type": "directory",
+      "weight": 64.0,
+      "size": 4096,
+      "children": [
+        {
+          "name": "collapsible tree.html",
+          "type": "file",
+          "weight": 71.323,
+          "size": 5087
+        },
+        {
+          "name": "ENSIMAG_folder_tree.json",
+          "type": "file",
+          "weight": 0,
+          "size": 0
+        },
+        {
+          "name": "folder_to_json.py",
+          "type": "file",
+          "weight": 35.93,
+          "size": 1291
+        },
+        {
+          "name": "INSTRUCTIONS",
+          "type": "file",
+          "weight": 9.381,
+          "size": 88
+        },
+        {
+          "name": "NoCacheHTTPServer.py",
+          "type": "file",
+          "weight": 22.113,
+          "size": 489
+        },
+        {
+          "name": "treemap.html",
+          "type": "file",
+          "weight": 46.444,
+          "size": 2157
+        },
+        {
+          "name": "treemap_v2.html",
+          "type": "file",
+          "weight": 79.887,
+          "size": 6382
+        },
+        {
+          "name": "treeviz.html",
+          "type": "file",
+          "weight": 109.659,
+          "size": 12025
+        },
+        {
+          "name": "__pycache__",
+          "type": "wide_directory",
+          "weight": 64.0,
+          "size": 4096
+        }
+      ]
+    },
+    {
+      "name": "Glass-data-analysis",
+      "type": "directory",
+      "weight": 64.0,
+      "size": 4096,
+      "children": [
+        {
+          "name": ".git",
+          "type": "wide_directory",
+          "weight": 64.0,
+          "size": 4096
+        },
+        {
+          "name": ".ipynb_checkpoints",
+          "type": "directory",
+          "weight": 64.0,
+          "size": 4096,
+          "children": [
+            {
+              "name": "Classifier-checkpoint.ipynb",
+              "type": "file",
+              "weight": 8.832,
+              "size": 78
+            },
+            {
+              "name": "Clustering-checkpoint.ipynb",
+              "type": "file",
+              "weight": 480.059,
+              "size": 230457
+            },
+            {
+              "name": "Data analysis-checkpoint.ipynb",
+              "type": "file",
+              "weight": 323.421,
+              "size": 104601
+            }
+          ]
+        },
+        {
+          "name": "Classifier.ipynb",
+          "type": "file",
+          "weight": 248.083,
+          "size": 61545
+        },
+        {
+          "name": "Clustering.ipynb",
+          "type": "file",
+          "weight": 480.059,
+          "size": 230457
+        },
+        {
+          "name": "Data analysis.ipynb",
+          "type": "file",
+          "weight": 517.926,
+          "size": 268247
+        },
+        {
+          "name": "glass.data",
+          "type": "file",
+          "weight": 110.077,
+          "size": 12117
+        },
+        {
+          "name": "glass.names",
+          "type": "file",
+          "weight": 60.0,
+          "size": 3600
+        },
+        {
+          "name": "glass.tag",
+          "type": "file",
+          "weight": 28.408,
+          "size": 807
+        },
+        {
+          "name": "README.md",
+          "type": "file",
+          "weight": 21.331,
+          "size": 455
+        }
+      ]
+    },
+    {
+      "name": "pocGoogleMaps",
+      "type": "directory",
+      "weight": 64.0,
+      "size": 4096,
+      "children": [
+        {
+          "name": ".idea",
+          "type": "wide_directory",
+          "weight": 64.0,
+          "size": 4096
+        },
+        {
+          "name": "main.py",
+          "type": "file",
+          "weight": 25.338,
+          "size": 642
+        },
+        {
+          "name": "pocGoogleMaps.iml",
+          "type": "file",
+          "weight": 18.601,
+          "size": 346
+        }
+      ]
+    },
+    {
+      "name": "police_shootings",
+      "type": "directory",
+      "weight": 64.0,
+      "size": 4096,
+      "children": [
+        {
+          "name": ".git",
+          "type": "wide_directory",
+          "weight": 64.0,
+          "size": 4096
+        },
+        {
+          "name": ".idea",
+          "type": "wide_directory",
+          "weight": 64.0,
+          "size": 4096
+        },
+        {
+          "name": "app.js",
+          "type": "file",
+          "weight": 33.196,
+          "size": 1102
+        },
+        {
+          "name": "bin",
+          "type": "wide_directory",
+          "weight": 0,
+          "size": 0
+        },
+        {
+          "name": "node_modules",
+          "type": "wide_directory",
+          "weight": 110.851,
+          "size": 12288
+        },
+        {
+          "name": "package-lock.json",
+          "type": "file",
+          "weight": 123.944,
+          "size": 15362
+        },
+        {
+          "name": "package.json",
+          "type": "file",
+          "weight": 17.464,
+          "size": 305
+        },
+        {
+          "name": "police_shootings.iml",
+          "type": "file",
+          "weight": 17.407,
+          "size": 303
+        },
+        {
+          "name": "public",
+          "type": "wide_directory",
+          "weight": 0,
+          "size": 0
+        },
+        {
+          "name": "README.md",
+          "type": "file",
+          "weight": 37.483,
+          "size": 1405
+        },
+        {
+          "name": "routes",
+          "type": "directory",
+          "weight": 0,
+          "size": 0,
+          "children": [
+            {
+              "name": "index.js",
+              "type": "file",
+              "weight": 14.107,
+              "size": 199
+            }
+          ]
+        },
+        {
+          "name": "views",
+          "type": "directory",
+          "weight": 0,
+          "size": 0,
+          "children": [
+            {
+              "name": "error.ejs",
+              "type": "file",
+              "weight": 9.274,
+              "size": 86
+            },
+            {
+              "name": "index.ejs",
+              "type": "file",
+              "weight": 38.588,
+              "size": 1489
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "template_d3JS",
+      "type": "directory",
+      "weight": 64.0,
+      "size": 4096,
+      "children": [
+        {
+          "name": ".git",
+          "type": "wide_directory",
+          "weight": 64.0,
+          "size": 4096
+        },
+        {
+          "name": ".idea",
+          "type": "wide_directory",
+          "weight": 64.0,
+          "size": 4096
+        },
+        {
+          "name": "app.js",
+          "type": "file",
+          "weight": 33.196,
+          "size": 1102
+        },
+        {
+          "name": "bin",
+          "type": "wide_directory",
+          "weight": 0,
+          "size": 0
+        },
+        {
+          "name": "node_modules",
+          "type": "wide_directory",
+          "weight": 110.851,
+          "size": 12288
+        },
+        {
+          "name": "package-lock.json",
+          "type": "file",
+          "weight": 123.944,
+          "size": 15362
+        },
+        {
+          "name": "package.json",
+          "type": "file",
+          "weight": 17.464,
+          "size": 305
+        },
+        {
+          "name": "public",
+          "type": "wide_directory",
+          "weight": 0,
+          "size": 0
+        },
+        {
+          "name": "README.md",
+          "type": "file",
+          "weight": 28.425,
+          "size": 808
+        },
+        {
+          "name": "routes",
+          "type": "directory",
+          "weight": 0,
+          "size": 0,
+          "children": [
+            {
+              "name": "index.js",
+              "type": "file",
+              "weight": 14.107,
+              "size": 199
+            }
+          ]
+        },
+        {
+          "name": "template_d3JS.iml",
+          "type": "file",
+          "weight": 18.52,
+          "size": 343
+        },
+        {
+          "name": "views",
+          "type": "directory",
+          "weight": 0,
+          "size": 0,
+          "children": [
+            {
+              "name": "error.ejs",
+              "type": "file",
+              "weight": 9.274,
+              "size": 86
+            },
+            {
+              "name": "index.ejs",
+              "type": "file",
+              "weight": 19.799,
+              "size": 392
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "twitter-transformers",
+      "type": "directory",
+      "weight": 64.0,
+      "size": 4096,
+      "children": [
+        {
+          "name": ".git",
+          "type": "wide_directory",
+          "weight": 64.0,
+          "size": 4096
+        },
+        {
+          "name": ".idea",
+          "type": "wide_directory",
+          "weight": 0,
+          "size": 0
+        },
+        {
+          "name": "clean text.py",
+          "type": "file",
+          "weight": 35.721,
+          "size": 1276
+        },
+        {
+          "name": "Financial Transformers.ipynb",
+          "type": "file",
+          "weight": 376.773,
+          "size": 141958
+        },
+        {
+          "name": "main.py",
+          "type": "file",
+          "weight": 64.109,
+          "size": 4110
+        },
+        {
+          "name": "test mongo.py",
+          "type": "file",
+          "weight": 44.34,
+          "size": 1966
+        },
+        {
+          "name": "test twitter recover.py",
+          "type": "file",
+          "weight": 53.712,
+          "size": 2885
+        },
+        {
+          "name": "test twitter stream.py",
+          "type": "file",
+          "weight": 34.771,
+          "size": 1209
+        },
+        {
+          "name": "TP3 - Copie",
+          "type": "directory",
+          "weight": 0,
+          "size": 0,
+          "children": [
+            {
+              "name": "drinks_csv.csv",
+              "type": "file",
+              "weight": 67.661,
+              "size": 4578
+            },
+            {
+              "name": "main.py",
+              "type": "file",
+              "weight": 30.952,
+              "size": 958
+            }
+          ]
+        },
+        {
+          "name": "tweet small.json",
+          "type": "file",
+          "weight": 35.043,
+          "size": 1228
+        },
+        {
+          "name": "tweet.json",
+          "type": "file",
+          "weight": 89.448,
+          "size": 8001
+        },
+        {
+          "name": "twitter-transformers.iml",
+          "type": "file",
+          "weight": 18.601,
+          "size": 346
+        }
+      ]
+    }
+  ]
+}
