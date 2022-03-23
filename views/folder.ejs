@@ -4,12 +4,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Police shootings</title>
     <link rel="stylesheet" href="stylesheets/style.css">
-    <link rel="icon" href="favico.png" />
-    <link rel="stylesheet"  href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="icon" href="favico.png"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -17,7 +25,8 @@
     <nav class="bg-white text-dark navbar navbar-expand-lg fixed-top py-3">
         <div class="container">
             <h1>Police Shooting in the US 2015 - 2020</h1>
-            <a id="toggle-explications" class="btn nav-link text-uppercase font-weight-bold text-success" onclick="toggleButton()" data-toggle="collapse" href=".multi-collapse" role="button">
+            <a id="toggle-explications" class="btn nav-link text-uppercase font-weight-bold text-success"
+               onclick="toggleButton()" data-toggle="collapse" href=".multi-collapse" role="button">
                 Afficher les explications
             </a>
         </div>
@@ -29,35 +38,40 @@
     <h6 style="font-style: italic;">Un projet de Paul Grisolia et Théo Henaff</h6>
 
     <blockquote class="blockquote" style="margin:50px 100px 100px 50px">
-        <p class="mb-0">Our hearts are heavy over yet another shooting of a Black man, Daunte Wright, at the hands of police.
+        <p class="mb-0">Our hearts are heavy over yet another shooting of a Black man, Daunte Wright, at the hands of
+            police.
             It’s important to conduct a full and transparent investigation, but this is also a
             reminder of just how badly we need to reimagine policing and public safety in this country.</p>
-        <footer class="blockquote-footer" style="margin-top: 20px">Barack Obama, <cite title="Twitter">Twitter, 13 avril 2021</cite></footer>
+        <footer class="blockquote-footer" style="margin-top: 20px">Barack Obama, <cite title="Twitter">Twitter, 13 avril
+                2021</cite></footer>
     </blockquote>
 
-    <p style="font-style: italic;"> Les données répertorient les personnes tuées par la police Américaine de 2015 à 2020.
-        Ces données sont publiées par le FBI et mise à disposition sur <a href="https://www.kaggle.com/mrmorj/data-police-shootings">Kaggle</a>. </p>
+    <p style="font-style: italic;"> Les données répertorient les personnes tuées par la police Américaine de 2015 à
+        2020.
+        Ces données sont publiées par le FBI et mise à disposition sur <a
+                href="https://www.kaggle.com/mrmorj/data-police-shootings">Kaggle</a>. </p>
 </div>
 
 <div class="container">
     <div class="row">
-        <div  id="map" class="col">
-            <h2>Répartition par état des meurtres par la police (2015-2020) </h2>
+        <div id="treemap" class="col">
+            <h2>Treemap de mon dossier Documents\ENSIMAG</h2>
         </div>
-
     </div>
-    <div class="row" style="height: 200px;">
+    <div class="row" style="height: 100px;"></div>
+    <div class="row">
+        <div id="collapsTree" class="col">
+            <h2>Arbre déroulable de mon dossier Documents\ENSIMAG</h2>
+            <br>
+        </div>
     </div>
+    <div class="row" style="height: 200px;"></div>
 </div>
-
-
-
-<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-<script src="https://cdn.jsdelivr.net/npm/@observablehq/plot@0.3"></script>
 
 <script>
     let toggler = false
-    function toggleButton (){
+
+    function toggleButton() {
         if (toggler === true) {
             document.getElementById("toggle-explications").innerHTML = "Afficher les explications";
         } else if (toggler === false) {
@@ -67,7 +81,7 @@
     }
 </script>
 
-<script type="text/javascript" src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://d3js.org/d3.v6.js"></script>
 
 <script src="javascripts/treemapFolder.js"></script>
 
