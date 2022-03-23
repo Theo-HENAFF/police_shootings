@@ -16,9 +16,9 @@
 <header class="header" style="margin-bottom:250px">
     <nav class="bg-white text-dark navbar navbar-expand-lg fixed-top py-3">
         <div class="container">
-            <h1>Visualisation MS Big Data</h1>
+            <h1>Police Shooting in the US 2015 - 2020</h1>
             <a id="toggle-explications" class="btn nav-link text-uppercase font-weight-bold text-success" onclick="toggleButton()" data-toggle="collapse" href=".multi-collapse" role="button">
-                Par Théo HENAFF et Paul GRISOLIA
+                Afficher les explications
             </a>
         </div>
     </nav>
@@ -41,36 +41,38 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-sm">
-            <div class="card card-3" onclick="goToPage('/police')">
-                <div class="my-3 p-3">
-                    <h2 class="display-5">Variables Visuelles 2021-2022</h2>
-                    <h3 class=""> Police Shooting in the US 2015 - 2020</h3>
-                    <p class="lead">Fin du projet le 10/12/2021.</p>
-                </div>
-                <div class="bg-dark box-shadow mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
-            </div>
+        <div  id="map" class="col">
+            <h2>Répartition par état des meurtres par la police (2015-2020) </h2>
         </div>
-        <div class="col-sm">
-            <div class="card card-1">
-                <div class="my-3 p-3" onclick="goToPage('/folder')">
-                    <h2 class="display-5">Visualisation d'arbre 2021-2022</h2>
-                    <h3 class=""> Structure hiérarchique d'un répertoire</h3>
-                    <p class="lead">Fin du projet le 12/04/2022</p>
 
-                </div>
-                <div class="bg-dark box-shadow mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
-            </div>
-        </div>
+    </div>
+    <div class="row" style="height: 200px;">
     </div>
 </div>
 
-<br><br><br>
+
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+<script src="https://cdn.jsdelivr.net/npm/@observablehq/plot@0.3"></script>
 
 <script>
     let toggler = false
-    function goToPage (page){document.location.href = page;}
+    function toggleButton (){
+        if (toggler === true) {
+            document.getElementById("toggle-explications").innerHTML = "Afficher les explications";
+        } else if (toggler === false) {
+            document.getElementById("toggle-explications").innerHTML = "Cacher les explications";
+        }
+        toggler = !toggler;
+    }
 </script>
+
+<script type="text/javascript" src="https://d3js.org/d3.v7.min.js"></script>
+
+<script src="javascripts/treemapFolder.js"></script>
+
+<script src="javascripts/dataloaderFolder.js"></script>
+
 
 </body>
 </html>
