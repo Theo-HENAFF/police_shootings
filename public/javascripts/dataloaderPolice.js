@@ -72,7 +72,7 @@ d3.csv("/data/shootings.csv").then(function (dsh) {
 
     const gmap = new GridMap(svg, width_map, height_map)
         .size([width_map, height_map]) //C16D34
-        .cellPalette(d3.scaleSequential(["#FFF5AE","#915127"]))
+        .cellPalette(d3.scaleSequential(["#FFF5AE", "#915127"]))
         .style({sizeByValue: false, legendTitle: "Nombre de personnes tués par la police", defaultTextColor: "black"})
         .field({code: "code", name: "name", total: "sum_value"})
         .mapGrid(map)
