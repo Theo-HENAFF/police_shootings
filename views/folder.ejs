@@ -24,44 +24,45 @@
 <header class="header" style="margin-bottom:250px">
     <nav class="bg-white text-dark navbar navbar-expand-lg fixed-top py-3">
         <div class="container">
-            <h1>Police Shooting in the US 2015 - 2020</h1>
+            <h1>Visualisation du dossier Documents\ENSIMAG</h1>
             <a id="toggle-explications" class="btn nav-link text-uppercase font-weight-bold text-success"
-               onclick="toggleButton()" data-toggle="collapse" href=".multi-collapse" role="button">
-                Afficher les explications
+               onclick="goToPage('/')" data-toggle="collapse" href=".multi-collapse" role="button">
+                Back to home
             </a>
         </div>
     </nav>
 </header>
 <div class="container text-center" style="margin-bottom:50px">
-    <h4>Les réseaux sociaux sont remplis d'images tragiques impliquant la police aux États-Unis.<br/>
-        Comment les visualisations peuvent aider à se forger une opinion ? </h4>
+    <h4>Nos ordinateur sont remplis de dossiers et fichiers.<br/>
+        Comment les visualiser pour mieux les comprendre ? </h4>
     <h6 style="font-style: italic;">Un projet de Paul Grisolia et Théo Henaff</h6>
 
     <blockquote class="blockquote" style="margin:50px 100px 100px 50px">
-        <p class="mb-0">Our hearts are heavy over yet another shooting of a Black man, Daunte Wright, at the hands of
-            police.
-            It’s important to conduct a full and transparent investigation, but this is also a
-            reminder of just how badly we need to reimagine policing and public safety in this country.</p>
-        <footer class="blockquote-footer" style="margin-top: 20px">Barack Obama, <cite title="Twitter">Twitter, 13 avril
-                2021</cite></footer>
+        <p class="mb-0">Un ordinateur, c'est comme une ville. Chaque fichier est une maison, avec une adresse unique.</p>
+        <footer class="blockquote-footer" style="margin-top: 20px">Jean-Christophe Grangé, <cite title="Twitter">Miserere (2008)</cite></footer>
     </blockquote>
-
-    <p style="font-style: italic;"> Les données répertorient les personnes tuées par la police Américaine de 2015 à
-        2020.
-        Ces données sont publiées par le FBI et mise à disposition sur <a
-                href="https://www.kaggle.com/mrmorj/data-police-shootings">Kaggle</a>. </p>
+</div>
+<div class="container text-left" style="margin-bottom:50px">
+    <p style="font-style: italic;"> Les données répertorient l'arborescence du dossier ENSIMAG d'un élève de ce groupe. </p>
+    <p>Comme nous n'avons pas trouvé le fichier python initial pour créer l'arborescence, nous avons créé le nôtre.
+        Après consultation des autres groupes de la classe il semble que ces deux scripts soient quasiment identiques.<br>
+        Quasiment ? Oui, nous avons ajouté un champ <cite title="Twitter">weight</cite> qui n'est autre que la racine carrée de <cite title="Twitter">size</cite>.
+        Cela permet une visualisation de la treemap bien plus aisée et intéressante.</p>
+    <p> Le script python et le fichier JSON sont disponibles à l'adresse suivante : <a href="https://gist.github.com/Theo-HENAFF/db655f194715eb39217bd6b2f6936c4e">GitHubGist</a>. </p>
 </div>
 
 <div class="container">
     <div class="row">
         <div id="treemap" class="col">
             <h2>Treemap de mon dossier Documents\ENSIMAG</h2>
+            <p>Plus d'infos au survol ...</p>
         </div>
     </div>
     <div class="row" style="height: 100px;"></div>
     <div class="row">
         <div id="collapsTree" class="col">
             <h2>Arbre déroulable de mon dossier Documents\ENSIMAG</h2>
+            <p>Plus d'infos en cliquant ou au survol ...</p>
             <br>
         </div>
     </div>
@@ -70,15 +71,7 @@
 
 <script>
     let toggler = false
-
-    function toggleButton() {
-        if (toggler === true) {
-            document.getElementById("toggle-explications").innerHTML = "Afficher les explications";
-        } else if (toggler === false) {
-            document.getElementById("toggle-explications").innerHTML = "Cacher les explications";
-        }
-        toggler = !toggler;
-    }
+    function goToPage (page){document.location.href = page;}
 </script>
 
 <script src="https://d3js.org/d3.v6.js"></script>

@@ -1,3 +1,9 @@
+.card-img-bottom {
+    width: 50%;
+    height: 15vw;
+    object-fit: cover;
+}
+
 .card{
     border-radius: 4px;
     background: #fff;
@@ -16,12 +22,6 @@
     font-weight: 600;
 }
 
-.card img{
-    position: absolute;
-    top: 20px;
-    right: 15px;
-    max-height: 120px;
-}
 
 .card-1{
     background-image: url(https://ionicframework.com/img/getting-started/ionic-native-card.png);
